@@ -50,7 +50,7 @@ class FuncController
         if (funcView.isVisible()) {
             boolean succeed = funcView.open();
             if (!succeed) {
-                Dispatcher.start(Utils.getContext(), Type.PERMISSION);
+                Dispatcher.start(Utils.getApplication(), Type.PERMISSION);
             }
         }
     }
@@ -139,7 +139,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.NET);
+                Dispatcher.start(Utils.getApplication(), Type.NET);
                 return false;
             }
         });
@@ -156,7 +156,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.FILE);
+                Dispatcher.start(Utils.getApplication(), Type.FILE);
                 return false;
             }
         });
@@ -173,7 +173,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.SELECT);
+                Dispatcher.start(Utils.getApplication(), Type.SELECT);
                 return false;
             }
         });
@@ -190,7 +190,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.BUG);
+                Dispatcher.start(Utils.getApplication(), Type.BUG);
                 return false;
             }
         });
@@ -207,7 +207,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.HIERARCHY);
+                Dispatcher.start(Utils.getApplication(), Type.HIERARCHY);
                 return false;
             }
         });
@@ -224,7 +224,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.BASELINE);
+                Dispatcher.start(Utils.getApplication(), Type.BASELINE);
                 return false;
             }
         });
@@ -241,7 +241,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.ROUTE);
+                Dispatcher.start(Utils.getApplication(), Type.ROUTE);
                 return false;
             }
         });
@@ -258,7 +258,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.HISTORY);
+                Dispatcher.start(Utils.getApplication(), Type.HISTORY);
                 return false;
             }
         });
@@ -311,7 +311,7 @@ class FuncController
 
             @Override
             public boolean onClick() {
-                Dispatcher.start(Utils.getContext(), Type.CONFIG);
+                Dispatcher.start(Utils.getApplication(), Type.CONFIG);
                 return false;
             }
         });

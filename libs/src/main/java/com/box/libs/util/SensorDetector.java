@@ -69,7 +69,7 @@ public class SensorDetector implements SensorEventListener {
 
     private void register() {
         try {
-            SensorManager manager = (SensorManager) Utils.getContext().getSystemService(
+            SensorManager manager = (SensorManager) Utils.getApplication().getSystemService(
                     Context.SENSOR_SERVICE);
             Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             manager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -80,7 +80,7 @@ public class SensorDetector implements SensorEventListener {
 
     public void unRegister() {
         try {
-            SensorManager manager = (SensorManager) Utils.getContext().getSystemService(
+            SensorManager manager = (SensorManager) Utils.getApplication().getSystemService(
                     Context.SENSOR_SERVICE);
             Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             manager.unregisterListener(this, sensor);

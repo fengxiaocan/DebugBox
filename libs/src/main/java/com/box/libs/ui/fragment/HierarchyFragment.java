@@ -80,7 +80,7 @@ public class HierarchyFragment extends BaseListFragment
 
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new LinearLayoutManager(Utils.getContext()) {
+        return new LinearLayoutManager(Utils.getApplication()) {
             @Override
             public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state,
                     final int position)

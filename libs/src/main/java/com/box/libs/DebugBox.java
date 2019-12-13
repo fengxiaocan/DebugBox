@@ -2,9 +2,7 @@ package com.box.libs;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
-
-import androidx.core.content.FileProvider;
+import android.util.Log;
 
 import com.box.libs.crash.CrashHandler;
 import com.box.libs.database.Databases;
@@ -20,7 +18,10 @@ import com.box.libs.util.Utils;
 /**
  * Created by linjiang on 29/05/2018.
  */
-public final class DebugBox extends FileProvider implements SensorDetector.Callback {
+public final class DebugBox /*extends FileProvider*/ implements SensorDetector.Callback {
+    static {
+        Log.e("noah", "DebugBox");
+    }
 
     private static DebugBox INSTANCE;
     private boolean notHostProcess;
@@ -32,32 +33,43 @@ public final class DebugBox extends FileProvider implements SensorDetector.Callb
     private HistoryRecorder historyRecorder;
     private FuncController funcController;
     private SensorDetector sensorDetector;
-    public DebugBox() {
-        if (INSTANCE != null) {
-            throw new RuntimeException();
-        }
+
+    private DebugBox() {
+//        if (INSTANCE != null) {
+//            throw new RuntimeException();
+//        }
+        Log.e("noah","DebugBox init");
     }
 
     public static DebugBox get() {
         if (INSTANCE == null) {
             // Not the host process
             DebugBox debugBox = new DebugBox();
-            debugBox.notHostProcess = true;
-            debugBox.onCreate();
+            debugBox.init();
+            //            debugBox.onCreate();
+            INSTANCE = debugBox;
         }
         return INSTANCE;
     }
 
-    @Override
-    public boolean onCreate() {
-        INSTANCE = this;
-        Context context = Utils.makeContextSafe(getContext());
-        init(((Application) context));
-        return super.onCreate();
+    //    @Override
+    //    public boolean onCreate() {
+    //        INSTANCE = this;
+    //        Context context = Utils.makeContextSafe(getContext());
+    //        init(((Application) context));
+    //        return super.onCreate();
+    //    }
+
+    public static void init(Application app) {
+        Utils.init(app);
     }
 
-    private void init(Application app) {
-        Utils.init(app);
+    private void init() {
+        Application app = Utils.getApplication();
+        if (app == null) {
+            throw new NullPointerException("DebugBox必须要注册init方法");
+        }
+
         funcController = new FuncController(app);
         //是否需要开启摇一摇
         sensorDetector = new SensorDetector(notHostProcess ? null : this);
@@ -109,6 +121,7 @@ public final class DebugBox extends FileProvider implements SensorDetector.Callb
         if (notHostProcess) {
             return;
         }
+        notHostProcess = true;
         funcController.open();
     }
 

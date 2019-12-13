@@ -14,7 +14,7 @@ public final class SharedPref {
     private SharedPrefDriver driver;
 
     public SharedPref() {
-        driver = new SharedPrefDriver(Utils.getContext());
+        driver = new SharedPrefDriver(Utils.getApplication());
         providers.add(new SharedPrefProvider());
     }
 

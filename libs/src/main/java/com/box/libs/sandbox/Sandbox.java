@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Sandbox {
 
-    private static String ROOT_PATH = Utils.getContext().getApplicationInfo().dataDir;
+    private static String ROOT_PATH = Utils.getApplication().getApplicationInfo().dataDir;
 
     public static List<File> getRootFiles() {
         return getFiles(new File(ROOT_PATH));
@@ -24,7 +24,7 @@ public class Sandbox {
 
     @TargetApi(Build.VERSION_CODES.N)
     public static List<File> getDPMFiles() {
-        return getFiles(new File(Utils.getContext().getApplicationInfo().deviceProtectedDataDir));
+        return getFiles(new File(Utils.getApplication().getApplicationInfo().deviceProtectedDataDir));
     }
 
     public static List<File> getFiles(File curFile) {

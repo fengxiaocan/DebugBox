@@ -1,7 +1,7 @@
 package com.box.libs.util;
 
-import android.annotation.SuppressLint;
 import android.app.AppOpsManager;
+import android.app.Application;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 
 import com.box.libs.R;
@@ -44,21 +43,19 @@ public class Utils {
     public static final DateFormat HHMMSS = new SimpleDateFormat("HH:mm:ss SSS",
             Locale.getDefault());
 
-    private static Context CONTEXT;
+    private static Application CONTEXT;
     private static Handler mainHandler;
 
 
     private Utils() {
     }
 
-    public static void init(Context context) {
-        CONTEXT = context.getApplicationContext();
+    public static void init(Application app) {
+        CONTEXT = app;
         mainHandler = new Handler(Looper.getMainLooper());
     }
 
-    @SuppressLint("PrivateApi")
-    public static @NonNull
-    Context getContext() {
+    public static Application getApplication() {
         return CONTEXT;
     }
 
@@ -153,7 +150,7 @@ public class Utils {
 
     public static void removeViewFromWindow(View v) {
         try {
-            WindowManager windowManager = (WindowManager) Utils.getContext().getSystemService(
+            WindowManager windowManager = (WindowManager) Utils.getApplication().getSystemService(
                     Context.WINDOW_SERVICE);
             windowManager.removeView(v);
         } catch (Throwable t) {
@@ -166,7 +163,7 @@ public class Utils {
             if (isPermissionDenied()) {
                 return false;
             }
-            WindowManager windowManager = (WindowManager) Utils.getContext().getSystemService(
+            WindowManager windowManager = (WindowManager) Utils.getApplication().getSystemService(
                     Context.WINDOW_SERVICE);
             windowManager.addView(v, params);
             return true;
@@ -179,7 +176,7 @@ public class Utils {
 
     public static void updateViewLayoutInWindow(View v, WindowManager.LayoutParams params) {
         try {
-            WindowManager windowManager = (WindowManager) Utils.getContext().getSystemService(
+            WindowManager windowManager = (WindowManager) Utils.getApplication().getSystemService(
                     Context.WINDOW_SERVICE);
             windowManager.updateViewLayout(v, params);
         } catch (Throwable ignore) {
@@ -188,7 +185,7 @@ public class Utils {
 
     private static boolean isPermissionDenied() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return !Settings.canDrawOverlays(getContext());
+            return !Settings.canDrawOverlays(getApplication());
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 AppOpsManager appOpsMgr = (AppOpsManager) CONTEXT.getSystemService(

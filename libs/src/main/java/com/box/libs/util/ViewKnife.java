@@ -35,12 +35,12 @@ import java.util.Locale;
 public class ViewKnife {
 
     public static Resources getResouces() {
-        return Utils.getContext().getResources();
+        return Utils.getApplication().getResources();
     }
 
     public static int getColor(@ColorRes int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return getResouces().getColor(color, Utils.getContext().getTheme());
+            return getResouces().getColor(color, Utils.getApplication().getTheme());
         } else {
             return getResouces().getColor(color);
         }
@@ -55,7 +55,7 @@ public class ViewKnife {
     }
 
     public static Drawable getDrawable(@DrawableRes int res) {
-        return ContextCompat.getDrawable(Utils.getContext(), res);
+        return ContextCompat.getDrawable(Utils.getApplication(), res);
     }
 
 

@@ -69,8 +69,8 @@ public class Crash implements Serializable {
         crash.type = t.getClass().getSimpleName();
         crash.cause = t.getMessage();
         crash.stack = Utils.collectThrow(t);
-        crash.versionCode = packageCode(Utils.getContext());
-        crash.versionName = packageName(Utils.getContext());
+        crash.versionCode = packageCode(Utils.getApplication());
+        crash.versionName = packageName(Utils.getApplication());
         crash.systemVersion = Build.VERSION.RELEASE;
         crash.systemSDK = "Android " + Build.VERSION.SDK_INT;
         crash.rom = Build.MANUFACTURER;

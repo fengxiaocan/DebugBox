@@ -30,10 +30,10 @@ public final class Databases {
     private final List<DriverHolder> drivers = new ArrayList<>();
 
     public Databases() {
-        addDriver(new DatabaseDriver(new DatabaseProvider(Utils.getContext())));
+        addDriver(new DatabaseDriver(new DatabaseProvider(Utils.getApplication())));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             addDriver(new DatabaseDriver(new DatabaseProvider(
-                    Utils.getContext().createDeviceProtectedStorageContext())));
+                    Utils.getApplication().createDeviceProtectedStorageContext())));
         }
     }
 

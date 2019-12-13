@@ -39,7 +39,7 @@ class CacheDatabase extends SQLiteOpenHelper {
     }
 
     private CacheDatabase() {
-        super(Utils.getContext(), DATABASE_NAME, null, DATABASE_VERSION);
+        super(Utils.getApplication(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     private static SQLiteDatabase getWDb() {

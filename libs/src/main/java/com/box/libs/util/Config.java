@@ -68,7 +68,7 @@ public class Config {
     }
 
     private static SharedPreferences getSp() {
-        return Utils.getContext().getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        return Utils.getApplication().getSharedPreferences(NAME, Context.MODE_PRIVATE);
     }
 
 
