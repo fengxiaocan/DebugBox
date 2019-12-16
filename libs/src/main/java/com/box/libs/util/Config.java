@@ -28,6 +28,7 @@ public class Config {
     private static final String KEY_UI_ACTIVITY_GRAVITY = "key_ui_activity_gravity";
     private static final String KEY_UI_GRID_INTERVAL = "key_ui_grid_interval";
     private static final String KEY_UI_IGNORE_SYS_LAYER = "key_ui_ignore_sys_layer";
+    private static final String KEY_UI_GRID_COLOR = "key_ui_grid_color";
     private static final String KEY_INTERNAL_DRAG_Y = "key_internal_drag_y";
     private static final String KEY_PERMISSION = "key_permission";
 
@@ -171,6 +172,14 @@ public class Config {
         return getSp().getBoolean(KEY_UI_IGNORE_SYS_LAYER, DEF_UI_IGNORE_SYS_LAYER);
     }
 
+    public static int getUI_GRID_COLOR() {
+        return getSp().getInt(KEY_UI_GRID_COLOR, 0x30000000);
+    }
+
+    public static void setUI_GRID_COLOR(int color) {
+        getSp().edit().putInt(KEY_UI_GRID_COLOR, color).apply();
+    }
+
     public static void setUI_IGNORE_SYS_LAYER(Boolean value) {
         getSp().edit().putBoolean(KEY_UI_IGNORE_SYS_LAYER, value).apply();
     }
@@ -200,6 +209,7 @@ public class Config {
         int UI_ACTIVITY_GRAVITY = 0x40;
         int UI_GRID_INTERVAL = 0x41;
         int UI_IGNORE_SYS_LAYER = 0x42;
+        int UI_GRID_COLOR = 0x43;
 
     }
 }

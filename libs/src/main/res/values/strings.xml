@@ -22,6 +22,7 @@
     <string name="pd_help_table">① Long press to copy and delete.\n② Click value to modify.\n③ When searching, the content of input need be a condition without \"where\", such as \"id=1\".</string>
     <string name="pd_help_file">① \"try open\" will copy this file to sdcard and try to use the app in your device to open it if can.</string>
     <string name="pd_make_sure">Please click OK to confirm.</string>
+    <string name="pd_help_no_webview">The current Activity does not contain a WebView, so make sure the page you enter has one</string>
     <string name="pd_copy_hint">The new file is location at %s</string>
     <string name="pd_name_network">network</string>
     <string name="pd_name_sandbox">sandbox</string>
@@ -34,6 +35,7 @@
     <string name="pd_name_activity">activity</string>
     <string name="pd_name_gridline">gridLine</string>
     <string name="pd_name_config">config</string>
+    <string name="pd_name_webview">webview</string>
     <string name="pd_name_copy_value">copy</string>
     <string name="pd_name_delete_row">delete row</string>
     <string name="pd_name_help">help</string>
@@ -57,4 +59,18 @@
     <string name="pd_name_turn_on">turn on</string>
     <string name="pd_name_threshold">threshold</string>
     <string name="pd_relaunch_request">success, please restart app</string>
+    <string name="delay_request">delay for each request(ms)</string>
+    <string name="delay_response">delay for each response(ms)</string>
+    <string name="maximum_loads">the maximum number of first loads</string>
+    <string name="show_url_connection">Show urlConnection request</string>
+    <string name="show_protect_mode"><![CDATA[show device-protect-mode file\n(only for api>=24)
+]]></string>
+    <string name="gravity_info">the gravity of activity info</string>
+    <string name="interval_grid_line">the interval of grid line(dp)</string>
+    <string name="ignore_layers">ignore system layers in hierarchy</string>
+    <string name="alpha_color">transparency</string>
+    <string name="red_color">red</string>
+    <string name="green_color">green</string>
+    <string name="blue_color">blue</string>
+    <string name="grid_color">the color of grid line</string>
 </resources>

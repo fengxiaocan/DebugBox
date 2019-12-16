@@ -18,12 +18,9 @@ import com.box.libs.util.Utils;
 /**
  * Created by linjiang on 29/05/2018.
  */
-public final class DebugBox /*extends FileProvider*/ implements SensorDetector.Callback {
-    static {
-        Log.e("noah", "DebugBox");
-    }
-
+public final class DebugBox /*extends FileProvider*/ {
     private static DebugBox INSTANCE;
+    private static SensorDetector sensorDetector;
     private boolean notHostProcess;
     private OkHttpInterceptor interceptor;
     private Databases databases;
@@ -32,13 +29,9 @@ public final class DebugBox /*extends FileProvider*/ implements SensorDetector.C
     private CrashHandler crashHandler;
     private HistoryRecorder historyRecorder;
     private FuncController funcController;
-    private SensorDetector sensorDetector;
 
     private DebugBox() {
-//        if (INSTANCE != null) {
-//            throw new RuntimeException();
-//        }
-        Log.e("noah","DebugBox init");
+        Log.e("noah", "DebugBox init");
     }
 
     public static DebugBox get() {
@@ -62,6 +55,29 @@ public final class DebugBox /*extends FileProvider*/ implements SensorDetector.C
 
     public static void init(Application app) {
         Utils.init(app);
+        //是否需要开启摇一摇
+        if (Config.getSHAKE_SWITCH()) {
+            sensorDetector = new SensorDetector(new SensorDetector.Callback() {
+                @Override
+                public void shakeValid() {
+                    get().open();
+                }
+            });
+        }
+    }
+
+    public static void init(Application app,boolean openSensor) {
+        Utils.init(app);
+        //是否需要开启摇一摇
+        Config.setSHAKE_SWITCH(openSensor);
+        if (openSensor) {
+            sensorDetector = new SensorDetector(new SensorDetector.Callback() {
+                @Override
+                public void shakeValid() {
+                    get().open();
+                }
+            });
+        }
     }
 
     private void init() {
@@ -69,10 +85,7 @@ public final class DebugBox /*extends FileProvider*/ implements SensorDetector.C
         if (app == null) {
             throw new NullPointerException("DebugBox必须要注册init方法");
         }
-
         funcController = new FuncController(app);
-        //是否需要开启摇一摇
-        sensorDetector = new SensorDetector(notHostProcess ? null : this);
         interceptor = new OkHttpInterceptor();
         databases = new Databases();
         sharedPref = new SharedPref();
@@ -126,12 +139,19 @@ public final class DebugBox /*extends FileProvider*/ implements SensorDetector.C
     }
 
     /**
-     * 是否开启摇一摇
+     * 开启摇一摇
      *
-     * @param openSensor
      */
-    public void setOpenShakeValid(boolean openSensor) {
-        Config.setSHAKE_SWITCH(openSensor);
+    public void openShakeValid() {
+        Config.setSHAKE_SWITCH(true);
+        if (sensorDetector == null) {
+            sensorDetector = new SensorDetector(new SensorDetector.Callback() {
+                @Override
+                public void shakeValid() {
+                    get().open();
+                }
+            });
+        }
     }
 
     /**
@@ -148,8 +168,4 @@ public final class DebugBox /*extends FileProvider*/ implements SensorDetector.C
         sensorDetector.unRegister();
     }
 
-    @Override
-    public void shakeValid() {
-        open();
-    }
 }

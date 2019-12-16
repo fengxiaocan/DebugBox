@@ -13,9 +13,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.box.libs.R;
 import com.box.libs.ui.item.CheckBoxItem;
 import com.box.libs.ui.item.NameArrowItem;
+import com.box.libs.ui.item.SelectItem;
 import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
+import com.box.libs.ui.view.ColorPicker;
 import com.box.libs.util.Config;
 import com.box.libs.util.Utils;
 import com.box.libs.util.ViewKnife;
@@ -94,6 +96,21 @@ public class ConfigFragment extends BaseListFragment {
                         case Config.Type.UI_IGNORE_SYS_LAYER:
                             Config.setUI_IGNORE_SYS_LAYER(!Config.getUI_IGNORE_SYS_LAYER());
                             break;
+                        case Config.Type.UI_GRID_COLOR:
+                            new ColorPicker(getContext()).setColor(Config.getUI_GRID_COLOR())
+                                                         .setOnColorSelectListener(
+                                                                 new ColorPicker.OnColorSelectListener() {
+                                                                     @Override
+                                                                     public void onSelectColor(
+                                                                             String colorString,
+                                                                             int color)
+                                                                     {
+                                                                         Config.setUI_GRID_COLOR(color);
+                                                                         refreshData();
+                                                                     }
+                                                                 })
+                                                         .show();
+                            break;
                     }
                 }
             }
@@ -104,28 +121,31 @@ public class ConfigFragment extends BaseListFragment {
         List<BaseItem> data = new ArrayList<>();
 
         data.add(new TitleItem(ViewKnife.getString(R.string.pd_name_network)));
-        data.add(new NameArrowItem("delay for each request(ms)", "" + Config.getNETWORK_DELAY_REQ())
-                .setTag(Config.Type.NETWORK_DELAY_REQ));
-        data.add(
-                new NameArrowItem("delay for each response(ms)", "" + Config.getNETWORK_DELAY_RES())
-                        .setTag(Config.Type.NETWORK_DELAY_RES));
-        data.add(new NameArrowItem("the maximum number of first loads",
+        data.add(new NameArrowItem(getString(R.string.delay_request),
+                "" + Config.getNETWORK_DELAY_REQ()).setTag(Config.Type.NETWORK_DELAY_REQ));
+        data.add(new NameArrowItem(getString(R.string.delay_response),
+                "" + Config.getNETWORK_DELAY_RES()).setTag(Config.Type.NETWORK_DELAY_RES));
+        data.add(new NameArrowItem(getString(R.string.maximum_loads),
                 "" + Config.getNETWORK_PAGE_SIZE()).setTag(Config.Type.NETWORK_PAGE_SIZE));
-        data.add(new CheckBoxItem("Show urlConnection request",
+        data.add(new CheckBoxItem(getString(R.string.show_url_connection),
                 Config.getNETWORK_URL_CONNECTION()).setTag(Config.Type.NETWORK_URLCONNECTION));
 
         data.add(new TitleItem(ViewKnife.getString(R.string.pd_name_sandbox)));
-        data.add(new CheckBoxItem("show device-protect-mode file\n(only for api>=24)",
+        data.add(new CheckBoxItem(getString(R.string.show_protect_mode),
                 Config.getSANDBOX_DPM()).setTag(Config.Type.SANDBOX_DPM));
 
         data.add(new TitleItem("UI"));
-        data.add(new NameArrowItem("the gravity of activity info",
+        data.add(new NameArrowItem(getString(R.string.gravity_info),
                 "" + ViewKnife.parseGravity(Config.getUI_ACTIVITY_GRAVITY())).setTag(
                 Config.Type.UI_ACTIVITY_GRAVITY));
-        data.add(new NameArrowItem("the interval of grid line(dp)",
+        data.add(new NameArrowItem(getString(R.string.interval_grid_line),
                 "" + Config.getUI_GRID_INTERVAL()).setTag(Config.Type.UI_GRID_INTERVAL));
-        data.add(new CheckBoxItem("ignore system layers in hierarchy",
-                Config.getUI_IGNORE_SYS_LAYER()).setTag(Config.Type.UI_IGNORE_SYS_LAYER));
+        data.add(
+                new CheckBoxItem(getString(R.string.ignore_layers), Config.getUI_IGNORE_SYS_LAYER())
+                        .setTag(Config.Type.UI_IGNORE_SYS_LAYER));
+        data.add(
+                new SelectItem(getString(R.string.grid_color), Config.getUI_GRID_COLOR()).setTag(
+                        Config.Type.UI_GRID_COLOR));
 
         data.add(new TitleItem("SHAKE"));
         data.add(new CheckBoxItem(getString(R.string.pd_name_turn_on),

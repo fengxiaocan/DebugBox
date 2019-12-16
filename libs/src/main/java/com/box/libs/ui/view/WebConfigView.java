@@ -2,7 +2,6 @@ package com.box.libs.ui.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.view.Gravity;
@@ -30,7 +29,7 @@ import com.box.libs.util.ViewKnife;
  * Created by linjiang on 2019/3/4.
  */
 
-public class FuncView extends LinearLayout {
+public class WebConfigView extends LinearLayout {
 
     private UniversalAdapter adapter;
     private float lastY;
@@ -52,7 +51,7 @@ public class FuncView extends LinearLayout {
                             (WindowManager.LayoutParams) getLayoutParams();
                     params.y += event.getRawY() - lastY;
                     params.y = Math.max(0, params.y);
-                    Utils.updateViewLayoutInWindow(FuncView.this, params);
+                    Utils.updateViewLayoutInWindow(WebConfigView.this, params);
                     lastY = event.getRawY();
                     Utils.cancelTask(task);
                     Utils.postDelayed(task, 200);
@@ -63,9 +62,10 @@ public class FuncView extends LinearLayout {
             return true;
         }
     };
+    private OnCloseListener onCloseListener;
 
     @SuppressLint("ClickableViewAccessibility")
-    public FuncView(Context context) {
+    public WebConfigView(Context context) {
         super(context);
         setOrientation(HORIZONTAL);
         setBackgroundResource(R.drawable.pd_shadow_131124);
@@ -96,19 +96,19 @@ public class FuncView extends LinearLayout {
 
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int maxWidth;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // drag + close + 5*func + 0.5*func
-            maxWidth = ViewKnife.dip2px(64) + ViewKnife.dip2px(50) * 5 + ViewKnife.dip2px(24);
-        } else {
-            maxWidth = MeasureSpec.getSize(widthMeasureSpec);
-        }
-        super.onMeasure(MeasureSpec.makeMeasureSpec(
-                Math.min(MeasureSpec.getSize(widthMeasureSpec), maxWidth),
-                MeasureSpec.getMode(widthMeasureSpec)), heightMeasureSpec);
-    }
+    //    @Override
+    //    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    //        int maxWidth;
+    //        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+    //            // drag + close + 5*func + 0.5*func
+    //            maxWidth = ViewKnife.dip2px(64) + ViewKnife.dip2px(50) * 5 + ViewKnife.dip2px(24);
+    //        } else {
+    //            maxWidth = MeasureSpec.getSize(widthMeasureSpec);
+    //        }
+    //        super.onMeasure(MeasureSpec.makeMeasureSpec(
+    //                Math.min(MeasureSpec.getSize(widthMeasureSpec), maxWidth),
+    //                MeasureSpec.getMode(widthMeasureSpec)), heightMeasureSpec);
+    //    }
 
     public void addItem(@DrawableRes int icon, String name) {
         adapter.insertItem(new FuncItem(icon, name));
@@ -125,12 +125,16 @@ public class FuncView extends LinearLayout {
         });
     }
 
+    public void setOnCloseListener(OnCloseListener onCloseListener) {
+        this.onCloseListener = onCloseListener;
+    }
+
     public boolean open() {
         if (ViewCompat.isAttachedToWindow(this)) {
             return true;
         }
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = ViewKnife.dip2px(62);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
@@ -149,6 +153,9 @@ public class FuncView extends LinearLayout {
         if (ViewCompat.isAttachedToWindow(this)) {
             Utils.removeViewFromWindow(this);
         }
+        if (onCloseListener != null) {
+            onCloseListener.onClose();
+        }
     }
 
     public boolean isVisible() {
@@ -157,5 +164,9 @@ public class FuncView extends LinearLayout {
 
     public interface OnItemClickListener {
         boolean onItemClick(int index);
+    }
+
+    public interface OnCloseListener {
+        void onClose();
     }
 }

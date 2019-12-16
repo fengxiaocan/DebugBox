@@ -28,6 +28,7 @@ class FuncController
     private final CurInfoView curInfoView;
     private final GridLineView gridLineView;
     private final List<IFunc> functions = new ArrayList<>();
+
     private int activeCount;
 
     FuncController(Application app) {

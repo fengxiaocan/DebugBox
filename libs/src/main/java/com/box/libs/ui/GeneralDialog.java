@@ -22,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.DialogTitle;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.DialogFragment;
@@ -95,10 +96,14 @@ public class GeneralDialog extends DialogFragment implements DialogInterface.OnC
     public void onClick(DialogInterface dialog, int which) {
         switch (which) {
             case DialogInterface.BUTTON_POSITIVE:
-                getParentFragment().onActivityResult(code, Activity.RESULT_OK, null);
+                if (getParentFragment() != null) {
+                    getParentFragment().onActivityResult(code, Activity.RESULT_OK, null);
+                }
                 break;
             case DialogInterface.BUTTON_NEGATIVE:
-                getParentFragment().onActivityResult(code, Activity.RESULT_CANCELED, null);
+                if (getParentFragment() != null) {
+                    getParentFragment().onActivityResult(code, Activity.RESULT_CANCELED, null);
+                }
                 break;
         }
     }
@@ -243,6 +248,13 @@ public class GeneralDialog extends DialogFragment implements DialogInterface.OnC
             GeneralDialog dialog = new GeneralDialog();
             dialog.setArguments(bundle);
             dialog.show(fragment.getChildFragmentManager(),
+                    "GeneralDialog#" + bundle.getInt(ATTR1));
+        }
+
+        public void show(AppCompatActivity activity) {
+            GeneralDialog dialog = new GeneralDialog();
+            dialog.setArguments(bundle);
+            dialog.show(activity.getSupportFragmentManager(),
                     "GeneralDialog#" + bundle.getInt(ATTR1));
         }
     }

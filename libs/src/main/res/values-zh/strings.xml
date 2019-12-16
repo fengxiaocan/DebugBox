@@ -22,6 +22,7 @@
     <string name="pd_help_sp">① 长按可执行复制或删除选项.\n② 点击Value可修改.</string>
     <string name="pd_help_table">① 长按可执行复制或删除选项.\n② 点击Value可修改.\n③ 搜索功能的输入必须是一个不带\"where\"的条件sql语句, 例如 \"id=1\".</string>
     <string name="pd_help_file">① \"尝试打开\" 会把该文件先复制到sdcard 并尝试使用手机内支持该文件类型的app打开</string>
+    <string name="pd_help_no_webview">当前Activity里不包含WebView,请确保进入的页面有WebView</string>
     <string name="pd_make_sure">请点击OK确定操作.</string>
     <string name="pd_copy_hint">已将文件拷贝到： %s</string>
     <string name="pd_name_network">网络日志</string>
@@ -35,6 +36,7 @@
     <string name="pd_name_activity">当前Act</string>
     <string name="pd_name_gridline">网格线</string>
     <string name="pd_name_config">配置</string>
+    <string name="pd_name_webview">浏览器</string>
     <string name="pd_name_copy_value">复制</string>
     <string name="pd_name_delete_row">删除该行</string>
     <string name="pd_name_help">帮助</string>
@@ -58,4 +60,17 @@
     <string name="pd_name_turn_on">打开</string>
     <string name="pd_name_threshold">摇晃系数</string>
     <string name="pd_relaunch_request">设置成功，重启应用后生效</string>
+    <string name="delay_request">每个请求的延迟(ms)</string>
+    <string name="delay_response">每个响应的延迟(ms)</string>
+    <string name="maximum_loads">第一次加载的最大数量</string>
+    <string name="show_url_connection">显示网络请求</string>
+    <string name="show_protect_mode"><![CDATA[显示设备私有模式的文件\n(只对api > = 24)]]></string>
+    <string name="gravity_info">Activity的位置</string>
+    <string name="interval_grid_line">网格线间距(dp)</string>
+    <string name="ignore_layers">忽略层次结构中的系统层</string>
+    <string name="alpha_color">透明值</string>
+    <string name="red_color">红色值</string>
+    <string name="green_color">绿色值</string>
+    <string name="blue_color">蓝色值</string>
+    <string name="grid_color">网格线颜色</string>
 </resources>

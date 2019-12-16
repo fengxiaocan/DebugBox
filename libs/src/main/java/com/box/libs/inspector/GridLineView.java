@@ -16,7 +16,7 @@ import com.box.libs.util.Utils;
 import com.box.libs.util.ViewKnife;
 
 /**
- * Created by linjiang on 2018/7/23.
+ * 网格线
  */
 public class GridLineView extends View {
 
@@ -24,7 +24,6 @@ public class GridLineView extends View {
     private Paint paint = new Paint() {
         {
             setAntiAlias(true);
-            setColor(0x30000000);
             setStrokeWidth(1);
         }
     };
@@ -34,6 +33,7 @@ public class GridLineView extends View {
     }
 
     private void open() {
+
         LINE_INTERVAL = ViewKnife.dip2px(Config.getUI_GRID_INTERVAL());
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
         params.width = FrameLayout.LayoutParams.MATCH_PARENT;
@@ -46,6 +46,9 @@ public class GridLineView extends View {
         params.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         params.format = PixelFormat.TRANSLUCENT;
+
+        paint.setColor(Config.getUI_GRID_COLOR());
+
         Utils.addViewToWindow(this, params);
     }
 
