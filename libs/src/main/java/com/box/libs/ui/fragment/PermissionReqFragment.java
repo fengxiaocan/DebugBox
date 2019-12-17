@@ -12,6 +12,7 @@ import android.provider.Settings;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.box.libs.DebugBox;
 import com.box.libs.R;
 import com.box.libs.ui.GeneralDialog;
 
@@ -56,6 +57,7 @@ public class PermissionReqFragment extends Fragment {
                         }
                     }
                 }
+                DebugBox.get().open();
             }
             getActivity().finish();
         }

@@ -3,6 +3,7 @@ package com.box.libs;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.box.libs.function.IFunc;
@@ -15,6 +16,7 @@ import com.box.libs.util.BoxUtils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -28,8 +30,7 @@ class FuncController
     private final CurInfoView curInfoView;
     private final GridLineView gridLineView;
     private final List<IFunc> functions = new ArrayList<>();
-
-    private int activeCount;
+    private final LinkedHashSet<String> activityList = new LinkedHashSet<>();
 
     FuncController(Application app) {
         funcView = new FuncView(app);
@@ -61,12 +62,14 @@ class FuncController
     }
 
     void showOverlay() {
+        Log.e("noah","showOverlay");
         funcView.setVisibility(View.VISIBLE);
         curInfoView.setVisibility(View.VISIBLE);
         gridLineView.setVisibility(View.VISIBLE);
     }
 
     void hideOverlay() {
+        Log.e("noah","hideOverlay");
         funcView.setVisibility(View.GONE);
         curInfoView.setVisibility(View.GONE);
         gridLineView.setVisibility(View.GONE);
@@ -84,8 +87,8 @@ class FuncController
 
     @Override
     public void onActivityStarted(Activity activity) {
-        activeCount++;
-        if (activeCount == 1) {
+        activityList.add(activity.toString());
+        if (activityList.size() == 1) {
             showOverlay();
         }
     }
@@ -101,7 +104,7 @@ class FuncController
     @Override
     public void onActivityPaused(Activity activity) {
         if (activity instanceof Dispatcher) {
-            if (activeCount > 0) {
+            if (activityList.size() > 0) {
                 showOverlay();
             }
         }
@@ -110,8 +113,8 @@ class FuncController
 
     @Override
     public void onActivityStopped(Activity activity) {
-        activeCount--;
-        if (activeCount <= 0) {
+        activityList.remove(activity.toString());
+        if (activityList.size() <= 0) {
             hideOverlay();
         }
     }

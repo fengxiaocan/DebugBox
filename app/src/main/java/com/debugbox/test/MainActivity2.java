@@ -1,6 +1,5 @@
 package com.debugbox.test;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -10,9 +9,8 @@ import android.webkit.WebViewClient;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.box.libs.DebugBox;
-import com.box.libs.web.DefaultWebViewFuns;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity {
 
     private WebView mWebView;
 
@@ -26,12 +24,7 @@ public class MainActivity extends AppCompatActivity {
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setSupportZoom(false);
         mWebView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        mWebView.loadUrl("https://www.baidu.com/");
-
-        DebugBox.init(getApplication());
-        DebugBox.get().addWebFunction(new DefaultWebViewFuns());
-
-
-        startActivity(new Intent(this,MainActivity2.class));
+        mWebView.loadUrl("https://www.dgtle.com/");
+        DebugBox.get().open();
     }
 }

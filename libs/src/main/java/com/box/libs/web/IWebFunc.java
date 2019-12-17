@@ -1,7 +1,6 @@
 package com.box.libs.web;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -15,20 +14,18 @@ import com.box.libs.ui.GeneralDialog;
 import com.box.libs.ui.view.WebConfigView;
 import com.box.libs.util.ViewKnife;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public abstract class IWebFunc<W> implements IFunc, IWebIntercept<W> {
     private final WebController<W> webController;
-    private final Class<W> beanClass;
     private W webView;
     private IBoxVisibleListener iBoxVisibleListener;
 
     public IWebFunc() {
         webController = new WebController<W>();
-        ParameterizedType parameterizedType =
-                (ParameterizedType) this.getClass().getGenericSuperclass();
-        beanClass = (Class<W>) parameterizedType.getActualTypeArguments()[0];
+//        ParameterizedType parameterizedType =
+//                (ParameterizedType) this.getClass().getGenericSuperclass();
+//        Class<W> beanClass = (Class<W>) parameterizedType.getActualTypeArguments()[0];
 
         List<IFunc> iFuncs = getFuncs();
         if (iFuncs != null) {
@@ -91,7 +88,7 @@ public abstract class IWebFunc<W> implements IFunc, IWebIntercept<W> {
     private W findWebView(View view) {
         if (view == null) {
             return null;
-        } else if (view.getClass().equals(beanClass)) {
+        } else if (isWebView(view)) {
             return (W) view;
         } else if (view instanceof ViewGroup) {
             ViewGroup group = (ViewGroup) view;
@@ -104,6 +101,8 @@ public abstract class IWebFunc<W> implements IFunc, IWebIntercept<W> {
         }
         return null;
     }
+
+    protected abstract boolean isWebView(View view);
 
     protected final W getWebView() {
         return webView;

@@ -2,6 +2,7 @@ package com.box.libs.web;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
+import android.view.View;
 import android.webkit.WebView;
 
 import com.box.libs.function.IFunc;
@@ -9,6 +10,12 @@ import com.box.libs.function.IFunc;
 import java.util.List;
 
 public class DefaultWebViewFuns extends IWebFunc<WebView> {
+
+    @Override
+    protected boolean isWebView(View view) {
+        return view instanceof WebView;
+    }
+
     @Override
     public List<IFunc> getFuncs() {
         return null;
