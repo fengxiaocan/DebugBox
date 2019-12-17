@@ -49,7 +49,6 @@
     <string name="pd_name_go_refresh">refresh</string>
     <string name="pd_name_html">source code</string>
     <string name="pd_name_body_html">body code</string>
-    <string name="pd_name_body_edit_html">edit code</string>
     <string name="pd_name_body_find_all">find</string>
     <string name="pd_name_body_find_all_sync">async find</string>
     <string name="pd_name_body_find_next">find next</string>
@@ -60,8 +59,6 @@
     <string name="pd_name_sp">SharedPreference</string>
     <string name="pd_name_file">Files</string>
     <string name="pd_name_clear">clear</string>
-    <string name="pd_name_zoom_in">zoom in</string>
-    <string name="pd_name_zoom_out">zoom out</string>
     <string name="pd_name_share">share to</string>
     <string name="pd_name_open">try open</string>
     <string name="pd_name_open_as_text">open as text</string>

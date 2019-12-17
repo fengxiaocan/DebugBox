@@ -44,7 +44,6 @@
     <string name="pd_name_go_refresh">刷新</string>
     <string name="pd_name_html">Html源码</string>
     <string name="pd_name_body_html">Body源码</string>
-    <string name="pd_name_body_edit_html">编辑html</string>
     <string name="pd_name_body_find_all">搜索</string>
     <string name="pd_name_body_find_next">搜下一个</string>
     <string name="pd_name_body_find_all_sync">异步搜索</string>
@@ -60,8 +59,6 @@
     <string name="pd_name_sp">SharedPreference</string>
     <string name="pd_name_file">内部存储</string>
     <string name="pd_name_clear">清除</string>
-    <string name="pd_name_zoom_in">放大</string>
-    <string name="pd_name_zoom_out">缩小</string>
     <string name="pd_name_share">以文件形式分享到</string>
     <string name="pd_name_open">尝试打开</string>
     <string name="pd_name_open_as_text">以文本形式打开</string>

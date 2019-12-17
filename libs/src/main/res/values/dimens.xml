@@ -11,7 +11,4 @@
     <dimen name="sp_alert_message_size">16sp</dimen>
     <dimen name="sp_alert_title_size">16sp</dimen>
     <dimen name="alert_dp_padding">12dp</dimen>
-    <dimen name="dp_line_break">8dp</dimen>
-    <dimen name="ios_sheet_radius">8dp</dimen>
-    <dimen name="ios_sheet_stroke_width">1px</dimen>
 </resources>

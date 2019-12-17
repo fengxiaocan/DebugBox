@@ -107,7 +107,6 @@
         android:background="#c1c0c0" />
 
     <com.box.libs.ui.view.MultiRvLayout
-        android:id="@+id/view_panel_rv_wrapper"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:gravity="center_vertical"
