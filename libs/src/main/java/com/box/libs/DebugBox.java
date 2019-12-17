@@ -11,9 +11,11 @@ import com.box.libs.history.HistoryRecorder;
 import com.box.libs.inspector.attribute.AttrFactory;
 import com.box.libs.network.OkHttpInterceptor;
 import com.box.libs.preference.SharedPref;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.Config;
 import com.box.libs.util.SensorDetector;
-import com.box.libs.util.Utils;
+import com.box.libs.web.IBoxVisibleListener;
+import com.box.libs.web.IWebFunc;
 
 /**
  * Created by linjiang on 29/05/2018.
@@ -48,13 +50,13 @@ public final class DebugBox /*extends FileProvider*/ {
     //    @Override
     //    public boolean onCreate() {
     //        INSTANCE = this;
-    //        Context context = Utils.makeContextSafe(getContext());
+    //        Context context = BoxUtils.makeContextSafe(getContext());
     //        init(((Application) context));
     //        return super.onCreate();
     //    }
 
     public static void init(Application app) {
-        Utils.init(app);
+        BoxUtils.init(app);
         //是否需要开启摇一摇
         if (Config.getSHAKE_SWITCH()) {
             sensorDetector = new SensorDetector(new SensorDetector.Callback() {
@@ -67,7 +69,7 @@ public final class DebugBox /*extends FileProvider*/ {
     }
 
     public static void init(Application app,boolean openSensor) {
-        Utils.init(app);
+        BoxUtils.init(app);
         //是否需要开启摇一摇
         Config.setSHAKE_SWITCH(openSensor);
         if (openSensor) {
@@ -81,7 +83,7 @@ public final class DebugBox /*extends FileProvider*/ {
     }
 
     private void init() {
-        Application app = Utils.getApplication();
+        Application app = BoxUtils.getApplication();
         if (app == null) {
             throw new NullPointerException("DebugBox必须要注册init方法");
         }
@@ -124,6 +126,26 @@ public final class DebugBox /*extends FileProvider*/ {
      * @param func
      */
     public void addFunction(IFunc func) {
+        funcController.addFunc(func);
+    }
+
+    /**
+     * 添加浏览器的拦截
+     * @param func
+     * @param <W>
+     */
+    public<W> void addWebFunction(IWebFunc<W> func) {
+        func.setBoxVisibleListener(new IBoxVisibleListener() {
+            @Override
+            public void showBox() {
+                funcController.showOverlay();
+            }
+
+            @Override
+            public void hideBox() {
+                funcController.hideOverlay();
+            }
+        });
         funcController.addFunc(func);
     }
 

@@ -5,10 +5,10 @@ import android.text.TextUtils;
 import com.box.libs.cache.Content;
 import com.box.libs.cache.Summary;
 import com.box.libs.network.okhttp3.OkUrlFactory;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.Config;
 import com.box.libs.util.FileUtil;
 import com.box.libs.util.FormatUtil;
-import com.box.libs.util.Utils;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -247,7 +247,7 @@ public class OkHttpInterceptor implements Interceptor {
             response = chain.proceed(request);
         } catch (Throwable e) {
             if (Config.isNetLogEnable() && id >= 0) {
-                markFailed(id, Utils.collectThrow(e));
+                markFailed(id, BoxUtils.collectThrow(e));
                 notifyEnd(id);
             }
             throw e;
@@ -379,7 +379,7 @@ public class OkHttpInterceptor implements Interceptor {
 
     private void notifyStart(final long id) {
         if (listener != null) {
-            Utils.post(new Runnable() {
+            BoxUtils.post(new Runnable() {
                 @Override
                 public void run() {
                     if (listener != null) {
@@ -392,7 +392,7 @@ public class OkHttpInterceptor implements Interceptor {
 
     private void notifyEnd(final long id) {
         if (listener != null) {
-            Utils.post(new Runnable() {
+            BoxUtils.post(new Runnable() {
                 @Override
                 public void run() {
                     if (listener != null) {

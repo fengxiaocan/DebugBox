@@ -5,8 +5,8 @@ import android.util.Pair;
 
 import androidx.annotation.IntDef;
 
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.Config;
-import com.box.libs.util.Utils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -72,7 +72,7 @@ public class Summary {
     public static Summary query(long id) {
         List<Summary> result = CacheDatabase.queryList(Summary.class,
                 BaseColumns._ID + " = " + id, "limit 1");
-        if (Utils.isNotEmpty(result)) {
+        if (BoxUtils.isNotEmpty(result)) {
             return result.get(0);
         }
         return null;

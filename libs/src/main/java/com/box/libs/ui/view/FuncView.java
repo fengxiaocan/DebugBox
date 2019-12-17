@@ -22,8 +22,8 @@ import com.box.libs.R;
 import com.box.libs.ui.item.FuncItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.Config;
-import com.box.libs.util.Utils;
 import com.box.libs.util.ViewKnife;
 
 /**
@@ -52,10 +52,10 @@ public class FuncView extends LinearLayout {
                             (WindowManager.LayoutParams) getLayoutParams();
                     params.y += event.getRawY() - lastY;
                     params.y = Math.max(0, params.y);
-                    Utils.updateViewLayoutInWindow(FuncView.this, params);
+                    BoxUtils.updateViewLayoutInWindow(FuncView.this, params);
                     lastY = event.getRawY();
-                    Utils.cancelTask(task);
-                    Utils.postDelayed(task, 200);
+                    BoxUtils.cancelTask(task);
+                    BoxUtils.postDelayed(task, 200);
                     break;
                 default:
                     break;
@@ -142,12 +142,12 @@ public class FuncView extends LinearLayout {
         params.gravity = Gravity.TOP | Gravity.START;
         params.x = 0;
         params.y = (int) Config.getDragY();
-        return Utils.addViewToWindow(this, params);
+        return BoxUtils.addViewToWindow(this, params);
     }
 
     public void close() {
         if (ViewCompat.isAttachedToWindow(this)) {
-            Utils.removeViewFromWindow(this);
+            BoxUtils.removeViewFromWindow(this);
         }
     }
 

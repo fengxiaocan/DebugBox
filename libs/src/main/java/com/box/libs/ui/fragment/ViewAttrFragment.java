@@ -20,8 +20,8 @@ import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.item.ViewAttrItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class ViewAttrFragment extends BaseListFragment {
                         bundle.putStringArray(PARAM3, assembleOption(editType));
                         launch(EditFragment.class, bundle, CODE1);
                     } else {
-                        Utils.toast(R.string.pd_can_not_edit);
+                        BoxUtils.toast(R.string.pd_can_not_edit);
                     }
                 }
             }
@@ -112,7 +112,7 @@ public class ViewAttrFragment extends BaseListFragment {
                             new Attribute("id", getToolbar().getSubtitle().toString())));
                 }
                 List<Attribute> attributes = DebugBox.get().getAttrFactory().parse(targetView);
-                if (Utils.isNotEmpty(attributes)) {
+                if (BoxUtils.isNotEmpty(attributes)) {
                     String category = null;
                     for (Attribute attr : attributes) {
                         if (!TextUtils.equals(category, attr.category)) {
@@ -137,12 +137,12 @@ public class ViewAttrFragment extends BaseListFragment {
         switch (type) {
             case Attribute.Edit.LAYOUT_WIDTH:
             case Attribute.Edit.LAYOUT_HEIGHT:
-                return Utils.newArray("MATCH_PARENT", "WRAP_CONTENT");
+                return BoxUtils.newArray("MATCH_PARENT", "WRAP_CONTENT");
             case Attribute.Edit.SCALE_TYPE:
-                return Utils.newArray("CENTER_INSIDE", "CENTER_CROP", "CENTER", "FIT_CENTER",
+                return BoxUtils.newArray("CENTER_INSIDE", "CENTER_CROP", "CENTER", "FIT_CENTER",
                         "FIT_END", "FIT_START", "FIT_XY", "MATRIX");
             case Attribute.Edit.VISIBILITY:
-                return Utils.newArray("VISIBLE", "INVISIBLE", "GONE");
+                return BoxUtils.newArray("VISIBLE", "INVISIBLE", "GONE");
             default:
                 return null;
         }
@@ -302,7 +302,7 @@ public class ViewAttrFragment extends BaseListFragment {
                     }
                 });
             } catch (Throwable t) {
-                Utils.toast(t.getMessage());
+                BoxUtils.toast(t.getMessage());
             }
         }
     }

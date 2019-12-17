@@ -42,12 +42,26 @@
     <string name="pd_name_search">search</string>
     <string name="pd_name_info">info</string>
     <string name="pd_name_add">add</string>
+    <string name="pd_name_add_js">add JS</string>
+    <string name="pd_name_add_url">link</string>
+    <string name="pd_name_go_forward">forward</string>
+    <string name="pd_name_go_back">back</string>
+    <string name="pd_name_go_refresh">refresh</string>
+    <string name="pd_name_html">source code</string>
+    <string name="pd_name_body_html">body code</string>
+    <string name="pd_name_body_edit_html">edit code</string>
+    <string name="pd_name_body_find_all">find</string>
+    <string name="pd_name_body_find_all_sync">async find</string>
+    <string name="pd_name_body_find_next">find next</string>
+
     <string name="pd_name_delete_all">delete all</string>
     <string name="pd_name_delete_key">delete</string>
     <string name="pd_name_database">Database</string>
     <string name="pd_name_sp">SharedPreference</string>
     <string name="pd_name_file">Files</string>
     <string name="pd_name_clear">clear</string>
+    <string name="pd_name_zoom_in">zoom in</string>
+    <string name="pd_name_zoom_out">zoom out</string>
     <string name="pd_name_share">share to</string>
     <string name="pd_name_open">try open</string>
     <string name="pd_name_open_as_text">open as text</string>
@@ -73,4 +87,6 @@
     <string name="green_color">green</string>
     <string name="blue_color">blue</string>
     <string name="grid_color">the color of grid line</string>
+    <string name="cancel">CANCEL</string>
+    <string name="sure">OK</string>
 </resources>

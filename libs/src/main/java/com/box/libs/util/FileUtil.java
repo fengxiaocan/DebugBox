@@ -55,14 +55,14 @@ public class FileUtil {
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        Uri uri = FileProvider.getUriForFile(Utils.getApplication(),
-                Utils.getApplication().getPackageName() + ".pdFileProvider", file);
+        Uri uri = FileProvider.getUriForFile(BoxUtils.getApplication(),
+                BoxUtils.getApplication().getPackageName() + ".pdFileProvider", file);
         intent.setDataAndType(uri, TextUtils.isEmpty(fileType) ? getFileType(filePath) : fileType);
         return intent;
     }
 
     public static String fileSize(File file) {
-        return Utils.formatSize(getFolderSize(file));
+        return BoxUtils.formatSize(getFolderSize(file));
     }
 
 
@@ -82,7 +82,7 @@ public class FileUtil {
         if (!originPath.exists()) {
             return null;
         }
-        File externalCacheDir = Utils.getApplication().getExternalCacheDir();
+        File externalCacheDir = BoxUtils.getApplication().getExternalCacheDir();
         if (externalCacheDir == null) {
             return null;
         }
@@ -196,7 +196,7 @@ public class FileUtil {
     }
 
     public static String saveFile(byte[] bytes, String name, String suffix) {
-        File cacheDir = Utils.getApplication().getCacheDir();
+        File cacheDir = BoxUtils.getApplication().getCacheDir();
         if (!cacheDir.exists()) {
             cacheDir.mkdirs();
         }

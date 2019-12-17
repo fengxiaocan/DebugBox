@@ -3,7 +3,7 @@ package com.box.libs.sandbox;
 import android.annotation.TargetApi;
 import android.os.Build;
 
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
 
 public class Sandbox {
 
-    private static String ROOT_PATH = Utils.getApplication().getApplicationInfo().dataDir;
+    private static String ROOT_PATH = BoxUtils.getApplication().getApplicationInfo().dataDir;
 
     public static List<File> getRootFiles() {
         return getFiles(new File(ROOT_PATH));
@@ -24,7 +24,7 @@ public class Sandbox {
 
     @TargetApi(Build.VERSION_CODES.N)
     public static List<File> getDPMFiles() {
-        return getFiles(new File(Utils.getApplication().getApplicationInfo().deviceProtectedDataDir));
+        return getFiles(new File(BoxUtils.getApplication().getApplicationInfo().deviceProtectedDataDir));
     }
 
     public static List<File> getFiles(File curFile) {

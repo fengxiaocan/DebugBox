@@ -69,7 +69,7 @@ public class Config {
     }
 
     private static SharedPreferences getSp() {
-        return Utils.getApplication().getSharedPreferences(NAME, Context.MODE_PRIVATE);
+        return BoxUtils.getApplication().getSharedPreferences(NAME, Context.MODE_PRIVATE);
     }
 
 

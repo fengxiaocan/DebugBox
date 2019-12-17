@@ -14,9 +14,9 @@ import com.box.libs.cache.Crash;
 import com.box.libs.ui.item.ExceptionItem;
 import com.box.libs.ui.item.KeyValueItem;
 import com.box.libs.ui.recyclerview.BaseItem;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.FileUtil;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class CrashStackFragment extends BaseListFragment {
 
         final Crash crash = (Crash) getArguments().getSerializable(PARAM1);
 
-        final String time = Utils.millis2String(crash.createTime, Utils.NO_MILLIS);
+        final String time = BoxUtils.millis2String(crash.createTime, BoxUtils.NO_MILLIS);
         getToolbar().setTitle(time);
         getToolbar().getMenu().add(-1, 0, 0, R.string.pd_name_copy_value);
         getToolbar().getMenu().add(-1, 0, 1, R.string.pd_name_share);
@@ -44,7 +44,7 @@ public class CrashStackFragment extends BaseListFragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getOrder() == 0) {
-                    Utils.copy2ClipBoard(formatText.toString());
+                    BoxUtils.copy2ClipBoard(formatText.toString());
                 } else if (item.getOrder() == 1) {
                     saveAsFileAndShare(formatText.toString());
                 }
@@ -58,9 +58,9 @@ public class CrashStackFragment extends BaseListFragment {
         items.add(new ExceptionItem(crash.stack));
 
         formatText.append("duration: ").append(
-                Utils.formatDuration(crash.createTime - crash.startTime)).append("\n");
+                BoxUtils.formatDuration(crash.createTime - crash.startTime)).append("\n");
         items.add(new KeyValueItem(
-                new String[]{"duration", Utils.formatDuration(crash.createTime - crash.startTime)},
+                new String[]{"duration", BoxUtils.formatDuration(crash.createTime - crash.startTime)},
                 false));
 
         formatText.append("versionCode: ").append(crash.versionCode).append("\n");
@@ -116,10 +116,10 @@ public class CrashStackFragment extends BaseListFragment {
                         startActivity(result);
                     } catch (Throwable t) {
                         t.printStackTrace();
-                        Utils.toast(t.getMessage());
+                        BoxUtils.toast(t.getMessage());
                     }
                 } else {
-                    Utils.toast(R.string.pd_failed);
+                    BoxUtils.toast(R.string.pd_failed);
                 }
 
             }

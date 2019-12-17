@@ -18,8 +18,8 @@ import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
 import com.box.libs.ui.view.ColorPicker;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.Config;
-import com.box.libs.util.Utils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class ConfigFragment extends BaseListFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 Config.reset();
                 refreshData();
-                Utils.toast(R.string.pd_success);
+                BoxUtils.toast(R.string.pd_success);
                 return false;
             }
         });
@@ -74,10 +74,10 @@ public class ConfigFragment extends BaseListFragment {
                             bundle.putBoolean(PARAM2, true);
                             if (type == Config.Type.SHAKE_THRESHOLD) {
                                 bundle.putStringArray(PARAM3,
-                                        Utils.newArray("800", "1000", "1200", "1400", "1600"));
+                                        BoxUtils.newArray("800", "1000", "1200", "1400", "1600"));
                             } else if (type == Config.Type.UI_ACTIVITY_GRAVITY) {
                                 bundle.putStringArray(PARAM3,
-                                        Utils.newArray("start|top", "end|top", "start|bottom",
+                                        BoxUtils.newArray("start|top", "end|top", "start|bottom",
                                                 "end|bottom"));
                                 bundle.putBoolean(PARAM4, true);
                             }
@@ -85,7 +85,7 @@ public class ConfigFragment extends BaseListFragment {
                             break;
                         case Config.Type.NETWORK_URLCONNECTION:
                             Config.setNETWORK_URL_CONNECTION(!Config.getNETWORK_URL_CONNECTION());
-                            Utils.toast(R.string.pd_relaunch_request);
+                            BoxUtils.toast(R.string.pd_relaunch_request);
                             break;
                         case Config.Type.SANDBOX_DPM:
                             Config.setSANDBOX_DPM(!Config.getSANDBOX_DPM());
@@ -174,7 +174,7 @@ public class ConfigFragment extends BaseListFragment {
                     case Config.Type.NETWORK_PAGE_SIZE:
                         int size = Integer.parseInt(value);
                         if (size < 1) {
-                            Utils.toast("invalid. At least 1");
+                            BoxUtils.toast("invalid. At least 1");
                             return;
                         }
                         Config.setNETWORK_PAGE_SIZE(size);
@@ -182,7 +182,7 @@ public class ConfigFragment extends BaseListFragment {
                     case Config.Type.SHAKE_THRESHOLD:
                         int threshold = Integer.parseInt(value);
                         if (threshold < 600) {
-                            Utils.toast("invalid. At least 600");
+                            BoxUtils.toast("invalid. At least 600");
                             return;
                         }
                         Config.setSHAKE_THRESHOLD(threshold);
@@ -193,13 +193,13 @@ public class ConfigFragment extends BaseListFragment {
                         if (result != 0) {
                             Config.setUI_ACTIVITY_GRAVITY(result);
                         } else {
-                            Utils.toast("invalid");
+                            BoxUtils.toast("invalid");
                         }
                         break;
                     case Config.Type.UI_GRID_INTERVAL:
                         int interval = Integer.parseInt(value);
                         if (interval < 1) {
-                            Utils.toast("invalid. At least 1");
+                            BoxUtils.toast("invalid. At least 1");
                             return;
                         }
                         Config.setUI_GRID_INTERVAL(interval);
@@ -207,10 +207,10 @@ public class ConfigFragment extends BaseListFragment {
 
                 }
                 refreshData();
-                Utils.toast(R.string.pd_success);
+                BoxUtils.toast(R.string.pd_success);
             } catch (Throwable t) {
                 t.printStackTrace();
-                Utils.toast(t.getMessage());
+                BoxUtils.toast(t.getMessage());
             }
         }
     }

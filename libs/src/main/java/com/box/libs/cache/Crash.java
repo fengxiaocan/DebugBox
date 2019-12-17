@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.BaseColumns;
 
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.io.Serializable;
 import java.util.List;
@@ -68,9 +68,9 @@ public class Crash implements Serializable {
         crash.createTime = System.currentTimeMillis();
         crash.type = t.getClass().getSimpleName();
         crash.cause = t.getMessage();
-        crash.stack = Utils.collectThrow(t);
-        crash.versionCode = packageCode(Utils.getApplication());
-        crash.versionName = packageName(Utils.getApplication());
+        crash.stack = BoxUtils.collectThrow(t);
+        crash.versionCode = packageCode(BoxUtils.getApplication());
+        crash.versionName = packageName(BoxUtils.getApplication());
         crash.systemVersion = Build.VERSION.RELEASE;
         crash.systemSDK = "Android " + Build.VERSION.SDK_INT;
         crash.rom = Build.MANUFACTURER;

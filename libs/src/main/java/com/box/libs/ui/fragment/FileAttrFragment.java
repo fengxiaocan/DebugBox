@@ -18,7 +18,7 @@ import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
 import com.box.libs.util.FileUtil;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -86,7 +86,7 @@ public class FileAttrFragment extends BaseListFragment {
             @Override
             public void onItemClick(int position, BaseItem item) {
                 if (item instanceof ContentItem) {
-                    Utils.copy2ClipBoard((String) item.data);
+                    BoxUtils.copy2ClipBoard((String) item.data);
                 }
             }
         });
@@ -100,7 +100,7 @@ public class FileAttrFragment extends BaseListFragment {
         data.add(new TitleItem("SIZE"));
         data.add(new ContentItem(FileUtil.fileSize(file)));
         data.add(new TitleItem("MODIFIED"));
-        data.add(new ContentItem(Utils.millis2String(file.lastModified(), Utils.NO_MILLIS)));
+        data.add(new ContentItem(BoxUtils.millis2String(file.lastModified(), BoxUtils.NO_MILLIS)));
         data.add(new TitleItem("AUTHORITY"));
         data.add(new ContentItem(
                 String.format("X: %b    W: %b    R: %b", file.canExecute(), file.canWrite(),
@@ -126,7 +126,7 @@ public class FileAttrFragment extends BaseListFragment {
 
             @Override
             public void onPostExecute(List<BaseItem> result) {
-                if (Utils.isNotEmpty(result)) {
+                if (BoxUtils.isNotEmpty(result)) {
                     getAdapter().insertItems(result, 10);
                 }
             }
@@ -170,10 +170,10 @@ public class FileAttrFragment extends BaseListFragment {
                         startActivity(result);
                     } catch (Throwable t) {
                         t.printStackTrace();
-                        Utils.toast(t.getMessage());
+                        BoxUtils.toast(t.getMessage());
                     }
                 } else {
-                    Utils.toast(R.string.pd_not_support);
+                    BoxUtils.toast(R.string.pd_not_support);
                 }
             }
         }).execute(file);
@@ -197,7 +197,7 @@ public class FileAttrFragment extends BaseListFragment {
                     }
                     getAdapter().setItems(items);
                 } else {
-                    Utils.toast(R.string.pd_not_support);
+                    BoxUtils.toast(R.string.pd_not_support);
                 }
             }
         }).execute(file);
@@ -214,7 +214,7 @@ public class FileAttrFragment extends BaseListFragment {
             @Override
             public void onPostExecute(Boolean result) {
                 hideLoading();
-                Utils.toast(result ? R.string.pd_success : R.string.pd_failed);
+                BoxUtils.toast(result ? R.string.pd_success : R.string.pd_failed);
                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
                         null);
                 onBackPressed();
@@ -237,7 +237,7 @@ public class FileAttrFragment extends BaseListFragment {
                 @Override
                 public void onPostExecute(Boolean result) {
                     hideLoading();
-                    Utils.toast(result ? R.string.pd_success : R.string.pd_failed);
+                    BoxUtils.toast(result ? R.string.pd_success : R.string.pd_failed);
                     loadData();
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
                             null);

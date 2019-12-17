@@ -2,7 +2,7 @@ package com.box.libs.cache;
 
 import android.provider.BaseColumns;
 
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class Content {
     public static Content query(long id) {
         List<Content> result = CacheDatabase.queryList(Content.class,
                 BaseColumns._ID + " = " + id, "limit 1");
-        if (Utils.isNotEmpty(result)) {
+        if (BoxUtils.isNotEmpty(result)) {
             return result.get(0);
         }
         return null;

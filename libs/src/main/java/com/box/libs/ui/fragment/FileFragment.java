@@ -17,7 +17,7 @@ import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
 import com.box.libs.util.FileUtil;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -75,7 +75,7 @@ public class FileFragment extends BaseListFragment {
 
     private void refresh() {
         List<File> files = Sandbox.getFiles(file);
-        if (Utils.isNotEmpty(files)) {
+        if (BoxUtils.isNotEmpty(files)) {
             List<BaseItem> data = new ArrayList<>();
             data.add(new TitleItem(String.format(Locale.getDefault(), "%d FILES", files.size())));
             for (int i = 0; i < files.size(); i++) {

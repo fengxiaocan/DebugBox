@@ -21,7 +21,7 @@ import com.box.libs.ui.item.HierarchyItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
 import com.box.libs.util.Config;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class HierarchyFragment extends BaseListFragment
 
     @Override
     protected RecyclerView.LayoutManager onCreateLayoutManager() {
-        return new LinearLayoutManager(Utils.getApplication()) {
+        return new LinearLayoutManager(BoxUtils.getApplication()) {
             @Override
             public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state,
                     final int position)

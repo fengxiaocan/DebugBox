@@ -21,7 +21,7 @@ import com.box.libs.ui.item.RouteParamItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
 import com.box.libs.ui.view.MenuRecyclerView;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
@@ -178,7 +178,7 @@ public class RouteParamFragment extends BaseListFragment implements RouteParamIt
         String clazz = getArguments().getString(PARAM2);
         Intent intent = new Intent(getContext(), Class.forName(clazz));
         List<BaseItem> items = getAdapter().getItems();
-        if (Utils.isNotEmpty(items)) {
+        if (BoxUtils.isNotEmpty(items)) {
             for (int i = 0; i < items.size(); i++) {
                 RouteParamItem item = (RouteParamItem) items.get(i);
                 switch (item.data) {
@@ -226,7 +226,7 @@ public class RouteParamFragment extends BaseListFragment implements RouteParamIt
         Bundle bundle = new Bundle();
         bundle.putString(PARAM1, def);
         if (type == RouteParamItem.Type.BOOLEAN) {
-            bundle.putStringArray(PARAM3, Utils.newArray("true", "false"));
+            bundle.putStringArray(PARAM3, BoxUtils.newArray("true", "false"));
             bundle.putBoolean(PARAM4, true);
         } else {
             bundle.putBoolean(PARAM2, type != RouteParamItem.Type.STRING);

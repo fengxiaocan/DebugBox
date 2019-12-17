@@ -22,9 +22,9 @@ import com.box.libs.ui.connector.SimpleOnQueryTextListener;
 import com.box.libs.ui.item.NetItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.Config;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
@@ -97,7 +97,7 @@ public class NetFragment extends BaseListFragment
             @Override
             public void onPostExecute(List<Summary> result) {
                 hideLoading();
-                if (Utils.isNotEmpty(result)) {
+                if (BoxUtils.isNotEmpty(result)) {
                     List<BaseItem> data = new ArrayList<>(result.size());
                     for (Summary summary : result) {
                         data.add(new NetItem(summary));
@@ -203,7 +203,7 @@ public class NetFragment extends BaseListFragment
             loadData();
             return;
         }
-        if (Utils.isNotEmpty(originData)) {
+        if (BoxUtils.isNotEmpty(originData)) {
             for (int i = originData.size() - 1; i >= 0; i--) {
                 if (originData.get(i) instanceof NetItem) {
                     String url = ((Summary) originData.get(i).data).url;

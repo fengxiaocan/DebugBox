@@ -16,10 +16,10 @@ import com.box.libs.ui.item.KeyValueItem;
 import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.FileUtil;
 import com.box.libs.util.FormatUtil;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class NetSummaryFragment extends BaseListFragment {
                     } else {
                         String value = ((String[]) item.data)[1];
                         if (!TextUtils.isEmpty(value)) {
-                            Utils.copy2ClipBoard(value);
+                            BoxUtils.copy2ClipBoard(value);
                         }
                     }
                 }
@@ -103,53 +103,53 @@ public class NetSummaryFragment extends BaseListFragment {
                 }
 
                 data.add(new TitleItem("GENERAL"));
-                data.add(new KeyValueItem(Utils.newArray("url", summary.url)));
-                data.add(new KeyValueItem(Utils.newArray("host", summary.host)));
-                data.add(new KeyValueItem(Utils.newArray("method", summary.method)));
-                data.add(new KeyValueItem(Utils.newArray("protocol", summary.protocol)));
-                data.add(new KeyValueItem(Utils.newArray("ssl", String.valueOf(summary.ssl))));
+                data.add(new KeyValueItem(BoxUtils.newArray("url", summary.url)));
+                data.add(new KeyValueItem(BoxUtils.newArray("host", summary.host)));
+                data.add(new KeyValueItem(BoxUtils.newArray("method", summary.method)));
+                data.add(new KeyValueItem(BoxUtils.newArray("protocol", summary.protocol)));
+                data.add(new KeyValueItem(BoxUtils.newArray("ssl", String.valueOf(summary.ssl))));
                 data.add(new KeyValueItem(
-                        Utils.newArray("start_time", Utils.millis2String(summary.start_time))));
+                        BoxUtils.newArray("start_time", BoxUtils.millis2String(summary.start_time))));
                 data.add(new KeyValueItem(
-                        Utils.newArray("end_time", Utils.millis2String(summary.end_time))));
+                        BoxUtils.newArray("end_time", BoxUtils.millis2String(summary.end_time))));
                 data.add(new KeyValueItem(
-                        Utils.newArray("req content-type", summary.request_content_type)));
+                        BoxUtils.newArray("req content-type", summary.request_content_type)));
                 data.add(new KeyValueItem(
-                        Utils.newArray("res content-type", summary.response_content_type)));
+                        BoxUtils.newArray("res content-type", summary.response_content_type)));
                 data.add(new KeyValueItem(
-                        Utils.newArray("request_size", Utils.formatSize(summary.request_size))));
+                        BoxUtils.newArray("request_size", BoxUtils.formatSize(summary.request_size))));
                 data.add(new KeyValueItem(
-                        Utils.newArray("response_size", Utils.formatSize(summary.response_size))));
+                        BoxUtils.newArray("response_size", BoxUtils.formatSize(summary.response_size))));
 
                 if (!TextUtils.isEmpty(summary.query)) {
                     data.add(new TitleItem(""));
-                    data.add(new KeyValueItem(Utils.newArray("query", summary.query)));
+                    data.add(new KeyValueItem(BoxUtils.newArray("query", summary.query)));
                 }
 
                 data.add(new TitleItem("BODY"));
                 KeyValueItem request = new KeyValueItem(
-                        Utils.newArray("request body", "tap to view"), false, true);
+                        BoxUtils.newArray("request body", "tap to view"), false, true);
                 request.setTag(PARAM1);
                 data.add(request);
                 if (summary.status == 2) {
                     KeyValueItem response = new KeyValueItem(
-                            Utils.newArray("response body", "tap to view"), false, true);
+                            BoxUtils.newArray("response body", "tap to view"), false, true);
                     response.setTag(PARAM2);
                     data.add(response);
                 }
 
 
-                if (Utils.isNotEmpty(summary.request_header)) {
+                if (BoxUtils.isNotEmpty(summary.request_header)) {
                     data.add(new TitleItem("REQUEST HEADER"));
                     for (Pair<String, String> pair : summary.request_header) {
-                        data.add(new KeyValueItem(Utils.newArray(pair.first, pair.second)));
+                        data.add(new KeyValueItem(BoxUtils.newArray(pair.first, pair.second)));
                     }
                 }
 
-                if (Utils.isNotEmpty(summary.response_header)) {
+                if (BoxUtils.isNotEmpty(summary.response_header)) {
                     data.add(new TitleItem("RESPONSE HEADER"));
                     for (Pair<String, String> pair : summary.response_header) {
-                        data.add(new KeyValueItem(Utils.newArray(pair.first, pair.second)));
+                        data.add(new KeyValueItem(BoxUtils.newArray(pair.first, pair.second)));
                     }
                 }
 
@@ -168,7 +168,7 @@ public class NetSummaryFragment extends BaseListFragment {
             @Override
             public void onPostExecute(String result) {
                 if (TextUtils.isEmpty(result)) {
-                    Utils.toast(R.string.pd_failed);
+                    BoxUtils.toast(R.string.pd_failed);
                     return;
                 }
                 tryOpenInternal(result);
@@ -195,10 +195,10 @@ public class NetSummaryFragment extends BaseListFragment {
                         startActivity(result);
                     } catch (Throwable t) {
                         t.printStackTrace();
-                        Utils.toast(t.getMessage());
+                        BoxUtils.toast(t.getMessage());
                     }
                 } else {
-                    Utils.toast(R.string.pd_not_support);
+                    BoxUtils.toast(R.string.pd_not_support);
                 }
             }
         }).execute(new File(path));

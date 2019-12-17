@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class Utils {
+public class BoxUtils {
 
     public static final DateFormat DEFAULT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS",
             Locale.getDefault());
@@ -47,7 +47,7 @@ public class Utils {
     private static Handler mainHandler;
 
 
-    private Utils() {
+    private BoxUtils() {
     }
 
     public static void init(Application app) {
@@ -87,15 +87,24 @@ public class Utils {
         Toast.makeText(CONTEXT, msg, Toast.LENGTH_SHORT).show();
     }
 
+    public static void toastSafe(final String msg) {
+       post(new Runnable() {
+           @Override
+           public void run() {
+               Toast.makeText(CONTEXT, msg, Toast.LENGTH_SHORT).show();
+           }
+       });
+    }
+
     public static void copy2ClipBoard(String msg) {
         ClipboardManager cm = (ClipboardManager) CONTEXT.getSystemService(
                 Context.CLIPBOARD_SERVICE);
         try {
             ClipData mClipData = ClipData.newPlainText("text", msg);
             cm.setPrimaryClip(mClipData);
-            Utils.toast(R.string.pd_copy_2_clipboard);
+            BoxUtils.toast(R.string.pd_copy_2_clipboard);
         } catch (Throwable t) {
-            Utils.toast(t.getMessage());
+            BoxUtils.toast(t.getMessage());
         }
     }
 
@@ -150,7 +159,7 @@ public class Utils {
 
     public static void removeViewFromWindow(View v) {
         try {
-            WindowManager windowManager = (WindowManager) Utils.getApplication().getSystemService(
+            WindowManager windowManager = (WindowManager) BoxUtils.getApplication().getSystemService(
                     Context.WINDOW_SERVICE);
             windowManager.removeView(v);
         } catch (Throwable t) {
@@ -163,7 +172,7 @@ public class Utils {
             if (isPermissionDenied()) {
                 return false;
             }
-            WindowManager windowManager = (WindowManager) Utils.getApplication().getSystemService(
+            WindowManager windowManager = (WindowManager) BoxUtils.getApplication().getSystemService(
                     Context.WINDOW_SERVICE);
             windowManager.addView(v, params);
             return true;
@@ -176,7 +185,7 @@ public class Utils {
 
     public static void updateViewLayoutInWindow(View v, WindowManager.LayoutParams params) {
         try {
-            WindowManager windowManager = (WindowManager) Utils.getApplication().getSystemService(
+            WindowManager windowManager = (WindowManager) BoxUtils.getApplication().getSystemService(
                     Context.WINDOW_SERVICE);
             windowManager.updateViewLayout(v, params);
         } catch (Throwable ignore) {

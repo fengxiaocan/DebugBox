@@ -26,8 +26,8 @@ import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.GridDividerDecoration;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
 import com.box.libs.ui.view.MenuRecyclerView;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
@@ -146,7 +146,7 @@ public class TableFragment extends BaseFragment {
         BaseItem gridItem = adapter.getItems().get(info.position);
         if (gridItem instanceof GridItem) {
             if (item.getItemId() == R.id.pd_menu_id_1) {
-                Utils.copy2ClipBoard((String) gridItem.data);
+                BoxUtils.copy2ClipBoard((String) gridItem.data);
                 return true;
             } else if (item.getItemId() == R.id.pd_menu_id_2) {
                 String pkValue = ((GridItem) gridItem).primaryKeyValue;
@@ -258,7 +258,7 @@ public class TableFragment extends BaseFragment {
                     }
                     adapter.setItems(data);
                 } else {
-                    Utils.toast(result.sqlError.message);
+                    BoxUtils.toast(result.sqlError.message);
                 }
                 hideLoading();
             }
@@ -279,10 +279,10 @@ public class TableFragment extends BaseFragment {
             public void onPostExecute(DatabaseResult result) {
                 hideLoading();
                 if (result.sqlError != null) {
-                    Utils.toast(result.sqlError.message);
+                    BoxUtils.toast(result.sqlError.message);
                 } else {
                     realTimeQueryCondition = null;
-                    Utils.toast(R.string.pd_success);
+                    BoxUtils.toast(R.string.pd_success);
                     loadData(null);
                 }
             }
@@ -305,7 +305,7 @@ public class TableFragment extends BaseFragment {
                 @Override
                 public void onPostExecute(DatabaseResult result) {
                     hideLoading();
-                    Utils.toast(result.sqlError != null ? R.string.pd_failed : R.string.pd_success);
+                    BoxUtils.toast(result.sqlError != null ? R.string.pd_failed : R.string.pd_success);
                     loadData(realTimeQueryCondition);
                 }
             }).execute();

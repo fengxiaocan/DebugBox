@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import androidx.core.view.ViewCompat;
 
 import com.box.libs.util.Config;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.ViewKnife;
 
 /**
@@ -49,11 +49,11 @@ public class GridLineView extends View {
 
         paint.setColor(Config.getUI_GRID_COLOR());
 
-        Utils.addViewToWindow(this, params);
+        BoxUtils.addViewToWindow(this, params);
     }
 
     private void close() {
-        Utils.removeViewFromWindow(this);
+        BoxUtils.removeViewFromWindow(this);
     }
 
     public void toggle() {

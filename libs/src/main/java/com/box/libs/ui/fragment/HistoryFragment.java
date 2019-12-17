@@ -14,7 +14,7 @@ import com.box.libs.ui.item.KeyValueItem;
 import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class HistoryFragment extends BaseListFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 History.clear();
                 getAdapter().clearItems();
-                Utils.toast(R.string.pd_success);
+                BoxUtils.toast(R.string.pd_success);
                 return true;
             }
         });
@@ -61,14 +61,14 @@ public class HistoryFragment extends BaseListFragment {
             public void onPostExecute(List<History> result) {
                 hideLoading();
                 List<BaseItem> data = new ArrayList<>(result.size());
-                if (Utils.isNotEmpty(result)) {
+                if (BoxUtils.isNotEmpty(result)) {
                     data.add(new TitleItem("Task"));
                     for (History history : result) {
                         String[] value = new String[2];
                         value[0] = history.activity;
                         value[1] = history.event;
                         data.add(new KeyValueItem(value, false, false,
-                                Utils.millis2String(history.createTime, Utils.HHMMSS)));
+                                BoxUtils.millis2String(history.createTime, BoxUtils.HHMMSS)));
                     }
                     getAdapter().setItems(data);
                 } else {

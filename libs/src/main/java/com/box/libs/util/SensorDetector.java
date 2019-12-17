@@ -55,8 +55,8 @@ public class SensorDetector implements SensorEventListener {
             if (event.sensor.getType() == 1) {
                 // app-window will only receive event at the top
                 if (checkIfShake(event.values[0], event.values[1], event.values[2])) {
-                    Utils.cancelTask(task);
-                    Utils.postDelayed(task, 150);
+                    BoxUtils.cancelTask(task);
+                    BoxUtils.postDelayed(task, 150);
                 }
             }
         }
@@ -69,7 +69,7 @@ public class SensorDetector implements SensorEventListener {
 
     private void register() {
         try {
-            SensorManager manager = (SensorManager) Utils.getApplication().getSystemService(
+            SensorManager manager = (SensorManager) BoxUtils.getApplication().getSystemService(
                     Context.SENSOR_SERVICE);
             Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             manager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -80,7 +80,7 @@ public class SensorDetector implements SensorEventListener {
 
     public void unRegister() {
         try {
-            SensorManager manager = (SensorManager) Utils.getApplication().getSystemService(
+            SensorManager manager = (SensorManager) BoxUtils.getApplication().getSystemService(
                     Context.SENSOR_SERVICE);
             Sensor sensor = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
             manager.unregisterListener(this, sensor);

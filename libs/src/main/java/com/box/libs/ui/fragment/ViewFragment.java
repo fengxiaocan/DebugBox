@@ -19,7 +19,7 @@ import com.box.libs.ui.GeneralDialog;
 import com.box.libs.ui.item.ViewItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.ViewKnife;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
@@ -49,7 +49,7 @@ public class ViewFragment extends BaseFragment implements View.OnClickListener {
                         if (!selected) {
                             boolean success = operableView.handleClick(clickItem);
                             if (!success) {
-                                Utils.toast("Alpha == 0 || Visibility != VISIBLE");
+                                BoxUtils.toast("Alpha == 0 || Visibility != VISIBLE");
                             }
                         }
                     }

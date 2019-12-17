@@ -1,7 +1,7 @@
 package com.box.libs.preference;
 
 import com.box.libs.preference.protocol.IProvider;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ public final class SharedPref {
     private SharedPrefDriver driver;
 
     public SharedPref() {
-        driver = new SharedPrefDriver(Utils.getApplication());
+        driver = new SharedPrefDriver(BoxUtils.getApplication());
         providers.add(new SharedPrefProvider());
     }
 

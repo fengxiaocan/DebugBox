@@ -9,7 +9,7 @@ import android.util.SparseArray;
 
 import com.box.libs.database.protocol.IDescriptor;
 import com.box.libs.database.protocol.IDriver;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,10 +30,10 @@ public final class Databases {
     private final List<DriverHolder> drivers = new ArrayList<>();
 
     public Databases() {
-        addDriver(new DatabaseDriver(new DatabaseProvider(Utils.getApplication())));
+        addDriver(new DatabaseDriver(new DatabaseProvider(BoxUtils.getApplication())));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             addDriver(new DatabaseDriver(new DatabaseProvider(
-                    Utils.getApplication().createDeviceProtectedStorageContext())));
+                    BoxUtils.getApplication().createDeviceProtectedStorageContext())));
         }
     }
 

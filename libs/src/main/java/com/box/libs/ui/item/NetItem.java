@@ -7,7 +7,7 @@ import com.box.libs.R;
 import com.box.libs.cache.Summary;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.util.Locale;
 
@@ -37,10 +37,10 @@ public class NetItem extends BaseItem<Summary> {
                 done && data.code > 0 && data.code != 200 ? Color.BLUE : Color.BLACK);
         pool.setText(R.id.item_net_url, data.url).setText(R.id.item_net_host, data.host).setText(
                 R.id.item_net_info, String.format(Locale.getDefault(), "%s    %s    %s%s%s",
-                        Utils.millis2String(data.start_time, Utils.HHMMSS), data.method,
+                        BoxUtils.millis2String(data.start_time, BoxUtils.HHMMSS), data.method,
                         done && data.code > 0 ? data.code + "    " : "",
                         (done && data.response_size > 0) ?
-                                Utils.formatSize(data.response_size) + "    " : "",
+                                BoxUtils.formatSize(data.response_size) + "    " : "",
                         done && data.end_time > 0 && data.start_time > 0 ?
                                 (data.end_time - data.start_time) + "ms" : ""));
 

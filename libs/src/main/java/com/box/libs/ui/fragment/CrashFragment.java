@@ -17,8 +17,8 @@ import com.box.libs.ui.item.CrashItem;
 import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -72,7 +72,7 @@ public class CrashFragment extends BaseListFragment {
         if (requestCode == CODE1 && resultCode == Activity.RESULT_OK) {
             Crash.clear();
             getAdapter().clearItems();
-            Utils.toast(R.string.pd_success);
+            BoxUtils.toast(R.string.pd_success);
         }
     }
 
@@ -89,10 +89,10 @@ public class CrashFragment extends BaseListFragment {
             public void onPostExecute(List<Crash> result) {
                 hideLoading();
                 List<BaseItem> data = new ArrayList<>(result.size());
-                if (Utils.isNotEmpty(result)) {
+                if (BoxUtils.isNotEmpty(result)) {
                     String title = null;
                     for (Crash crash : result) {
-                        String tmp = Utils.millis2String(crash.createTime, FORMAT);
+                        String tmp = BoxUtils.millis2String(crash.createTime, FORMAT);
                         if (!TextUtils.equals(title, tmp)) {
                             data.add(new TitleItem(tmp));
                             title = tmp;

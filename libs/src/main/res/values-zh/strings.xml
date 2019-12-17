@@ -37,6 +37,17 @@
     <string name="pd_name_gridline">网格线</string>
     <string name="pd_name_config">配置</string>
     <string name="pd_name_webview">浏览器</string>
+    <string name="pd_name_add_js">添加JS</string>
+    <string name="pd_name_add_url">添加链接</string>
+    <string name="pd_name_go_forward">前进</string>
+    <string name="pd_name_go_back">后退</string>
+    <string name="pd_name_go_refresh">刷新</string>
+    <string name="pd_name_html">Html源码</string>
+    <string name="pd_name_body_html">Body源码</string>
+    <string name="pd_name_body_edit_html">编辑html</string>
+    <string name="pd_name_body_find_all">搜索</string>
+    <string name="pd_name_body_find_next">搜下一个</string>
+    <string name="pd_name_body_find_all_sync">异步搜索</string>
     <string name="pd_name_copy_value">复制</string>
     <string name="pd_name_delete_row">删除该行</string>
     <string name="pd_name_help">帮助</string>
@@ -49,6 +60,8 @@
     <string name="pd_name_sp">SharedPreference</string>
     <string name="pd_name_file">内部存储</string>
     <string name="pd_name_clear">清除</string>
+    <string name="pd_name_zoom_in">放大</string>
+    <string name="pd_name_zoom_out">缩小</string>
     <string name="pd_name_share">以文件形式分享到</string>
     <string name="pd_name_open">尝试打开</string>
     <string name="pd_name_open_as_text">以文本形式打开</string>
@@ -73,4 +86,6 @@
     <string name="green_color">绿色值</string>
     <string name="blue_color">蓝色值</string>
     <string name="grid_color">网格线颜色</string>
+    <string name="cancel">取消</string>
+    <string name="sure">确定</string>
 </resources>

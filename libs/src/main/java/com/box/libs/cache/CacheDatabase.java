@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -39,7 +39,7 @@ class CacheDatabase extends SQLiteOpenHelper {
     }
 
     private CacheDatabase() {
-        super(Utils.getApplication(), DATABASE_NAME, null, DATABASE_VERSION);
+        super(BoxUtils.getApplication(), DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     private static SQLiteDatabase getWDb() {

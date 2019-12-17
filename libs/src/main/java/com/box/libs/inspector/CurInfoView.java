@@ -13,7 +13,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.view.ViewCompat;
 
 import com.box.libs.util.Config;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.ViewKnife;
 
 /**
@@ -46,11 +46,11 @@ public class CurInfoView extends AppCompatTextView {
                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         params.format = PixelFormat.TRANSLUCENT;
         params.gravity = Config.getUI_ACTIVITY_GRAVITY();
-        Utils.addViewToWindow(this, params);
+        BoxUtils.addViewToWindow(this, params);
     }
 
     private void close() {
-        Utils.removeViewFromWindow(this);
+        BoxUtils.removeViewFromWindow(this);
     }
 
     public void toggle() {

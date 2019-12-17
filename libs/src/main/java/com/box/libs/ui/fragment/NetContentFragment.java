@@ -26,9 +26,9 @@ import com.box.libs.R;
 import com.box.libs.cache.Content;
 import com.box.libs.ui.connector.SimpleOnActionExpandListener;
 import com.box.libs.ui.connector.SimpleOnQueryTextListener;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.FileUtil;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 import com.box.libs.util.ViewKnife;
 
 import java.io.File;
@@ -98,7 +98,7 @@ public class NetContentFragment extends BaseFragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getOrder() == 1) {
-                    Utils.copy2ClipBoard(originContent);
+                    BoxUtils.copy2ClipBoard(originContent);
                 } else if (item.getOrder() == 2) {
                     saveAsFileAndShare(originContent);
                 }
@@ -206,10 +206,10 @@ public class NetContentFragment extends BaseFragment {
                         startActivity(result);
                     } catch (Throwable t) {
                         t.printStackTrace();
-                        Utils.toast(t.getMessage());
+                        BoxUtils.toast(t.getMessage());
                     }
                 } else {
-                    Utils.toast(R.string.pd_failed);
+                    BoxUtils.toast(R.string.pd_failed);
                 }
 
             }
@@ -236,7 +236,7 @@ public class NetContentFragment extends BaseFragment {
             public void onPostExecute(String result) {
                 hideLoading();
                 if (TextUtils.isEmpty(result)) {
-                    Utils.toast(R.string.pd_error_msg);
+                    BoxUtils.toast(R.string.pd_error_msg);
                     return;
                 }
                 setupMenuView();

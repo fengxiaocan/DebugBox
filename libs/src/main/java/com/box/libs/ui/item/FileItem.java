@@ -5,8 +5,8 @@ import android.view.View;
 import com.box.libs.R;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.FileUtil;
-import com.box.libs.util.Utils;
 
 import java.io.File;
 import java.util.Locale;
@@ -22,10 +22,10 @@ public class FileItem extends BaseItem<File> {
         super(data);
         if (!data.isDirectory()) {
             info = String.format(Locale.getDefault(), "%s    %s", FileUtil.fileSize(data),
-                    Utils.millis2String(data.lastModified(), Utils.NO_MILLIS));
+                    BoxUtils.millis2String(data.lastModified(), BoxUtils.NO_MILLIS));
         } else {
-            info = String.format(Locale.getDefault(), "%d items    %s", Utils.getCount(data.list()),
-                    Utils.millis2String(data.lastModified(), Utils.NO_MILLIS));
+            info = String.format(Locale.getDefault(), "%d items    %s", BoxUtils.getCount(data.list()),
+                    BoxUtils.millis2String(data.lastModified(), BoxUtils.NO_MILLIS));
         }
     }
 

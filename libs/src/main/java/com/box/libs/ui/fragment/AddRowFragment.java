@@ -18,8 +18,8 @@ import com.box.libs.ui.item.KeyEditItem;
 import com.box.libs.ui.item.KeyValueItem;
 import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.recyclerview.BaseItem;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +55,7 @@ public class AddRowFragment extends BaseListFragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 List<BaseItem> datas = getAdapter().getItems();
-                if (Utils.isNotEmpty(datas)) {
+                if (BoxUtils.isNotEmpty(datas)) {
                     ContentValues values = new ContentValues();
                     for (int i = 0; i < datas.size(); i++) {
                         if (datas.get(i) instanceof KeyEditItem) {
@@ -64,7 +64,7 @@ public class AddRowFragment extends BaseListFragment {
                             }
                             String[] data = ((KeyEditItem) datas.get(i)).data;
                             //                            if (((KeyEditItem)datas.get(i)).isNotNull && data[1] == null) {
-                            //                                Utils.toast("failed, [" + data[0] + "] need valid value");
+                            //                                BoxUtils.toast("failed, [" + data[0] + "] need valid value");
                             //                                return true;
                             //                            }
                             values.put(data[0], data[1]);
@@ -138,7 +138,7 @@ public class AddRowFragment extends BaseListFragment {
                     }
                     getAdapter().setItems(data);
                 } else {
-                    Utils.toast(result.sqlError.message);
+                    BoxUtils.toast(result.sqlError.message);
                 }
                 hideLoading();
             }
@@ -157,11 +157,11 @@ public class AddRowFragment extends BaseListFragment {
             public void onPostExecute(DatabaseResult result) {
                 hideLoading();
                 if (result.sqlError == null) {
-                    Utils.toast(R.string.pd_success);
+                    BoxUtils.toast(R.string.pd_success);
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK,
                             null);
                 } else {
-                    Utils.toast(result.sqlError.message);
+                    BoxUtils.toast(result.sqlError.message);
                     getTargetFragment().onActivityResult(getTargetRequestCode(),
                             Activity.RESULT_CANCELED, null);
                 }

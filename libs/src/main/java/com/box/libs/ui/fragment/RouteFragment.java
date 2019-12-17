@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import com.box.libs.R;
 import com.box.libs.ui.item.RouteItem;
 import com.box.libs.ui.recyclerview.BaseItem;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class RouteFragment extends BaseListFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getToolbar().setTitle(R.string.pd_name_navigate);
-        List<String> activities = Utils.getActivities();
+        List<String> activities = BoxUtils.getActivities();
         List<BaseItem> data = new ArrayList<>();
         for (int i = 0; i < activities.size(); i++) {
             data.add(new RouteItem(activities.get(i), callback));

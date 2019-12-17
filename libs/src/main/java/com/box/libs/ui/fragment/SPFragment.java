@@ -19,8 +19,8 @@ import com.box.libs.ui.item.TitleItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
 import com.box.libs.ui.view.MenuRecyclerView;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.SimpleTask;
-import com.box.libs.util.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -108,8 +108,8 @@ public class SPFragment extends BaseListFragment {
                 }
 
                 if (item.getOrder() == 0) {
-                    Utils.copy2ClipBoard("KEY :: " + keyValueItem.data[0] + "\nVALUE  :: " +
-                                         keyValueItem.data[1]);
+                    BoxUtils.copy2ClipBoard("KEY :: " + keyValueItem.data[0] + "\nVALUE  :: " +
+                                            keyValueItem.data[1]);
                     return true;
                 } else if (item.getOrder() == 1) {
                     String clickedKey = keyValueItem.data[0];
@@ -159,9 +159,9 @@ public class SPFragment extends BaseListFragment {
                     public void onPostExecute(String result) {
                         hideLoading();
                         if (TextUtils.isEmpty(result)) {
-                            Utils.toast(R.string.pd_success);
+                            BoxUtils.toast(R.string.pd_success);
                         } else {
-                            Utils.toast(result);
+                            BoxUtils.toast(result);
                         }
                         loadData();
                     }

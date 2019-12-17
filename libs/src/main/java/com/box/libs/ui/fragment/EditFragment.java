@@ -22,7 +22,7 @@ import com.box.libs.R;
 import com.box.libs.ui.item.OptionItem;
 import com.box.libs.ui.recyclerview.BaseItem;
 import com.box.libs.ui.recyclerview.UniversalAdapter;
-import com.box.libs.util.Utils;
+import com.box.libs.util.BoxUtils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
@@ -121,7 +121,7 @@ public class EditFragment extends BaseFragment {
                 if (!TextUtils.equals(curValue, data)) {
                     notifyResult(curValue);
                 } else {
-                    Utils.toast(R.string.pd_no_change);
+                    BoxUtils.toast(R.string.pd_no_change);
                 }
                 return true;
             }
