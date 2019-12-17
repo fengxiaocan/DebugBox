@@ -62,14 +62,12 @@ class FuncController
     }
 
     void showOverlay() {
-        Log.e("noah","showOverlay");
         funcView.setVisibility(View.VISIBLE);
         curInfoView.setVisibility(View.VISIBLE);
         gridLineView.setVisibility(View.VISIBLE);
     }
 
     void hideOverlay() {
-        Log.e("noah","hideOverlay");
         funcView.setVisibility(View.GONE);
         curInfoView.setVisibility(View.GONE);
         gridLineView.setVisibility(View.GONE);
