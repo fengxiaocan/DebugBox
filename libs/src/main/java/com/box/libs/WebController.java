@@ -89,9 +89,7 @@ class WebController<W>
     }
 
     @Override
-    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-    }
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) { }
 
     @Override
     public void onActivityStarted(Activity activity) {
@@ -217,12 +215,46 @@ class WebController<W>
 
             @Override
             public String getName() {
-                return ViewKnife.getString(R.string.pd_name_clear);
+                return ViewKnife.getString(R.string.pd_name_clear_cache);
             }
 
             @Override
             public boolean onClick() {
                 wiWebFunc.clearCache();
+                return false;
+            }
+        });
+        addFunc(new IFunc() {
+            @Override
+            public int getIcon() {
+                return R.drawable.pd_zoom_in;
+            }
+
+            @Override
+            public String getName() {
+                return ViewKnife.getString(R.string.pd_name_zoom_in);
+            }
+
+            @Override
+            public boolean onClick() {
+                wiWebFunc.zoomInFont();
+                return false;
+            }
+        });
+        addFunc(new IFunc() {
+            @Override
+            public int getIcon() {
+                return R.drawable.pd_zoom_out;
+            }
+
+            @Override
+            public String getName() {
+                return ViewKnife.getString(R.string.pd_name_zoom_out);
+            }
+
+            @Override
+            public boolean onClick() {
+                wiWebFunc.zoomOutFont();
                 return false;
             }
         });

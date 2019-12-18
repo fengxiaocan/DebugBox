@@ -11,7 +11,6 @@ import com.box.libs.function.IFunc;
 import java.util.List;
 
 public class DefaultWebViewFuns extends IWebFunc<WebView> {
-
     @Override
     protected boolean isWebView(View view) {
         return view instanceof WebView;
@@ -86,6 +85,18 @@ public class DefaultWebViewFuns extends IWebFunc<WebView> {
     @Override
     public void clearCache(WebView web) {
         web.clearCache(true);
+    }
+
+    @Override
+    public void zoomInFont(WebView web) {
+        web.getSettings().setDefaultFixedFontSize(web.getSettings().getDefaultFixedFontSize()+1);
+        web.getSettings().setDefaultFontSize(web.getSettings().getDefaultFontSize()+1);
+    }
+
+    @Override
+    public void zoomOutFont(WebView web) {
+        web.getSettings().setDefaultFixedFontSize(web.getSettings().getDefaultFixedFontSize()-1);
+        web.getSettings().setDefaultFontSize(web.getSettings().getDefaultFontSize()-1);
     }
 
 }

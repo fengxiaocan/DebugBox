@@ -36,4 +36,8 @@ public interface IWebIntercept<W> {
     void findNext(W web);
 
     void clearCache(W web);
+
+    void zoomInFont(W web);
+
+    void zoomOutFont(W web);
 }

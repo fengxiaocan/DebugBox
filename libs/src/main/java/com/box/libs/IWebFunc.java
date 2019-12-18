@@ -159,4 +159,14 @@ public abstract class IWebFunc<W> implements IFunc, IWebIntercept<W> {
             clearCache(webView);
         }
     }
+    void zoomInFont() {
+        if (webView != null) {
+            zoomInFont(webView);
+        }
+    }
+    void zoomOutFont() {
+        if (webView != null) {
+            zoomOutFont(webView);
+        }
+    }
 }
