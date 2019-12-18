@@ -89,26 +89,26 @@ public class FuncView extends LinearLayout {
         recyclerView.setAdapter(adapter = new UniversalAdapter());
 
         addView(moveView,
-                new LayoutParams(ViewKnife.dip2px(24), ViewGroup.LayoutParams.MATCH_PARENT));
+                new LayoutParams(ViewKnife.dip2px(30), ViewGroup.LayoutParams.MATCH_PARENT));
         addView(recyclerView, new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
         addView(closeView,
-                new LayoutParams(ViewKnife.dip2px(40), ViewGroup.LayoutParams.MATCH_PARENT));
+                new LayoutParams(ViewKnife.dip2px(50), ViewGroup.LayoutParams.MATCH_PARENT));
 
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int maxWidth;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            // drag + close + 5*func + 0.5*func
-            maxWidth = ViewKnife.dip2px(64) + ViewKnife.dip2px(50) * 5 + ViewKnife.dip2px(24);
-        } else {
-            maxWidth = MeasureSpec.getSize(widthMeasureSpec);
-        }
-        super.onMeasure(MeasureSpec.makeMeasureSpec(
-                Math.min(MeasureSpec.getSize(widthMeasureSpec), maxWidth),
-                MeasureSpec.getMode(widthMeasureSpec)), heightMeasureSpec);
-    }
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        int maxWidth;
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            // drag + close + 5*func + 0.5*func
+//            maxWidth = ViewKnife.dip2px(64) + ViewKnife.dip2px(50) * 5 + ViewKnife.dip2px(24);
+//        } else {
+//            maxWidth = MeasureSpec.getSize(widthMeasureSpec);
+//        }
+//        super.onMeasure(MeasureSpec.makeMeasureSpec(
+//                Math.min(MeasureSpec.getSize(widthMeasureSpec), maxWidth),
+//                MeasureSpec.getMode(widthMeasureSpec)), heightMeasureSpec);
+//    }
 
     public void addItem(@DrawableRes int icon, String name) {
         adapter.insertItem(new FuncItem(icon, name));
@@ -130,7 +130,7 @@ public class FuncView extends LinearLayout {
             return true;
         }
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = ViewKnife.dip2px(62);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;

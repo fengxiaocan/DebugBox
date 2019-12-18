@@ -270,7 +270,13 @@ class WebController<W>
                             new InputResultListener() {
                                 @Override
                                 public void onResult(String result) {
-                                    wiWebFunc.addJs(result);
+                                    if (result != null) {
+                                        if (result.startsWith("javascript:")) {
+                                            wiWebFunc.addJs(result);
+                                        } else {
+                                            wiWebFunc.addJs("javascript:" + result);
+                                        }
+                                    }
                                 }
                             }).show();
                 }

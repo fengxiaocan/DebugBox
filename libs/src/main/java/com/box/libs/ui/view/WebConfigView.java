@@ -89,10 +89,10 @@ public class WebConfigView extends LinearLayout {
         recyclerView.setAdapter(adapter = new UniversalAdapter());
 
         addView(moveView,
-                new LayoutParams(ViewKnife.dip2px(24), ViewGroup.LayoutParams.MATCH_PARENT));
+                new LayoutParams(ViewKnife.dip2px(30), ViewGroup.LayoutParams.MATCH_PARENT));
         addView(recyclerView, new LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1));
         addView(closeView,
-                new LayoutParams(ViewKnife.dip2px(40), ViewGroup.LayoutParams.MATCH_PARENT));
+                new LayoutParams(ViewKnife.dip2px(50), ViewGroup.LayoutParams.MATCH_PARENT));
 
     }
 
