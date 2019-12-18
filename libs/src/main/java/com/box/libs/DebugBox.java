@@ -11,19 +11,21 @@ import com.box.libs.history.HistoryRecorder;
 import com.box.libs.inspector.attribute.AttrFactory;
 import com.box.libs.network.OkHttpInterceptor;
 import com.box.libs.preference.SharedPref;
+import com.box.libs.ui.view.WebConfigView;
 import com.box.libs.util.BoxUtils;
 import com.box.libs.util.Config;
 import com.box.libs.util.SensorDetector;
-import com.box.libs.web.IBoxVisibleListener;
-import com.box.libs.web.IWebFunc;
+import com.box.libs.web.IFuncOnClickListener;
+
+import java.util.List;
 
 /**
  * Created by linjiang on 29/05/2018.
  */
-public final class DebugBox /*extends FileProvider*/ {
+public final class DebugBox<W> /*extends FileProvider*/ {
     private static DebugBox INSTANCE;
     private static SensorDetector sensorDetector;
-    private boolean notHostProcess;
+    private static IWebFunc sWebFunc;
     private OkHttpInterceptor interceptor;
     private Databases databases;
     private SharedPref sharedPref;
@@ -31,6 +33,7 @@ public final class DebugBox /*extends FileProvider*/ {
     private CrashHandler crashHandler;
     private HistoryRecorder historyRecorder;
     private FuncController funcController;
+    private WebController<W> webController;
 
     private DebugBox() {
         Log.e("noah", "DebugBox init");
@@ -38,22 +41,12 @@ public final class DebugBox /*extends FileProvider*/ {
 
     public static DebugBox get() {
         if (INSTANCE == null) {
-            // Not the host process
             DebugBox debugBox = new DebugBox();
             debugBox.init();
-            //            debugBox.onCreate();
             INSTANCE = debugBox;
         }
         return INSTANCE;
     }
-
-    //    @Override
-    //    public boolean onCreate() {
-    //        INSTANCE = this;
-    //        Context context = BoxUtils.makeContextSafe(getContext());
-    //        init(((Application) context));
-    //        return super.onCreate();
-    //    }
 
     public static void init(Application app) {
         BoxUtils.init(app);
@@ -68,7 +61,7 @@ public final class DebugBox /*extends FileProvider*/ {
         }
     }
 
-    public static void init(Application app,boolean openSensor) {
+    public static void init(Application app, boolean openSensor) {
         BoxUtils.init(app);
         //是否需要开启摇一摇
         Config.setSHAKE_SWITCH(openSensor);
@@ -94,6 +87,35 @@ public final class DebugBox /*extends FileProvider*/ {
         attrFactory = new AttrFactory();
         crashHandler = new CrashHandler(app);
         historyRecorder = new HistoryRecorder(app);
+
+        if (sWebFunc != null) {
+            //在初始化的时候,添加上
+            funcController.addFunc(sWebFunc);
+            //在初始化的时候,初始化控制器
+            webController = new WebController<>(sWebFunc);
+            //添加子类注册方法
+            List<IFunc> iFuncs = sWebFunc.getFuncs();
+            if (iFuncs != null) {
+                for (IFunc iFunc : iFuncs) {
+                    webController.addFunc(iFunc);
+                }
+            }
+            //设置回调
+            sWebFunc.setOnOpenListener(new IFuncOnClickListener() {
+                @Override
+                public void onOpen() {
+                    funcController.hideOverlay();
+                    webController.init(getTopActivity());
+                    webController.onCloseListener(new WebConfigView.OnCloseListener() {
+                        @Override
+                        public void onClose() {
+                            funcController.showOverlay();
+                        }
+                    });
+                    webController.open();
+                }
+            });
+        }
     }
 
     public OkHttpInterceptor getInterceptor() {
@@ -131,38 +153,23 @@ public final class DebugBox /*extends FileProvider*/ {
 
     /**
      * 添加浏览器的拦截
+     *
      * @param func
-     * @param <W>
      */
-    public<W> void addWebFunction(IWebFunc<W> func) {
-        func.setBoxVisibleListener(new IBoxVisibleListener() {
-            @Override
-            public void showBox() {
-                funcController.showOverlay();
-            }
-
-            @Override
-            public void hideBox() {
-                funcController.hideOverlay();
-            }
-        });
-        funcController.addFunc(func);
+    public static<W> void registWebFunction(IWebFunc<W> func) {
+        //懒加载的方式,先在box 中注册该方法函数
+        sWebFunc = func;
     }
 
     /**
      * Open the panel.
      */
     public void open() {
-        if (notHostProcess) {
-            return;
-        }
-        notHostProcess = true;
         funcController.open();
     }
 
     /**
      * 开启摇一摇
-     *
      */
     public void openShakeValid() {
         Config.setSHAKE_SWITCH(true);

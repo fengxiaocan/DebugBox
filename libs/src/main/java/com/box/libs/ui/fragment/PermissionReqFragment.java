@@ -57,7 +57,6 @@ public class PermissionReqFragment extends Fragment {
                         }
                     }
                 }
-                DebugBox.get().open();
             }
             getActivity().finish();
         }

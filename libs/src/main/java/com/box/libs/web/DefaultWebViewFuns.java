@@ -5,6 +5,7 @@ import android.os.Build;
 import android.view.View;
 import android.webkit.WebView;
 
+import com.box.libs.IWebFunc;
 import com.box.libs.function.IFunc;
 
 import java.util.List;

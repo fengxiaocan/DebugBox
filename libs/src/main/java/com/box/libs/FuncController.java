@@ -3,7 +3,6 @@ package com.box.libs;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.box.libs.function.IFunc;
@@ -31,6 +30,8 @@ class FuncController
     private final GridLineView gridLineView;
     private final List<IFunc> functions = new ArrayList<>();
     private final LinkedHashSet<String> activityList = new LinkedHashSet<>();
+    private static boolean isOpen = false;
+
 
     FuncController(Application app) {
         funcView = new FuncView(app);
@@ -49,7 +50,9 @@ class FuncController
     }
 
     void open() {
-        if (funcView.isVisible()) {
+        if (!isOpen) {
+            isOpen = true;
+            showOverlay();
             boolean succeed = funcView.open();
             if (!succeed) {
                 Dispatcher.start(BoxUtils.getApplication(), Type.PERMISSION);
@@ -58,7 +61,12 @@ class FuncController
     }
 
     void close() {
+        isOpen = false;
         funcView.close();
+    }
+
+    static boolean isOpen() {
+        return isOpen;
     }
 
     void showOverlay() {

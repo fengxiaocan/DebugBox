@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
         mWebView.loadUrl("https://www.baidu.com/");
 
         DebugBox.init(getApplication());
-        DebugBox.get().addWebFunction(new DefaultWebViewFuns());
-
+        DebugBox.registWebFunction(new DefaultWebViewFuns());
+        DebugBox.get().open();
 
         startActivity(new Intent(this,MainActivity2.class));
     }

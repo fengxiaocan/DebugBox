@@ -1,12 +1,10 @@
-package com.box.libs.web;
+package com.box.libs;
 
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 
-import com.box.libs.R;
 import com.box.libs.function.IFunc;
 import com.box.libs.ui.Dispatcher;
 import com.box.libs.ui.InputDialog;
@@ -17,6 +15,7 @@ import com.box.libs.util.BoxUtils;
 import com.box.libs.util.ViewKnife;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -25,20 +24,23 @@ import java.util.List;
 
 class WebController<W>
         implements WebConfigView.OnItemClickListener, Application.ActivityLifecycleCallbacks {
-    private static final String JAVA_SCRIPT_NAME = "java_obj";
-    private static final String SHOW_SOURCE_JS =
+
+    public static final String JAVA_SCRIPT_NAME = "java_obj";
+    public static final String SHOW_SOURCE_JS =
             "javascript:window.java_obj.showSource(document.documentElement.outerHTML);";
-    private static final String SHOW_BODY_JS =
+    public static final String SHOW_BODY_JS =
             "javascript:window.java_obj.showBody(document.body.innerHTML);";
+
     private final WebConfigView webConfigView;
     private final List<IFunc> functions = new ArrayList<>();
+    private final LinkedHashSet<String> hashSet = new LinkedHashSet<>();
     private Activity currentActivity;
-    private W webView;
-    private IWebIntercept<W> iWebIntercept;
+    private IWebFunc<W> wiWebFunc;
     private String url;
     private String search;
 
-    WebController() {
+    WebController(IWebFunc<W> wiWebFunc) {
+        this.wiWebFunc = wiWebFunc;
         Application app = BoxUtils.getApplication();
         app.registerActivityLifecycleCallbacks(this);
         webConfigView = new WebConfigView(app);
@@ -46,15 +48,8 @@ class WebController<W>
         addDefaultFunctions();
     }
 
-    void init(Activity activity, W view, IWebIntercept<W> intercept) {
+    void init(Activity activity) {
         this.currentActivity = activity;
-        this.webView = view;
-        this.iWebIntercept = intercept;
-        if (iWebIntercept != null) {
-            iWebIntercept.onIntercept(webView);
-            iWebIntercept.addJavascriptInterface(webView, new InJavaScriptObj(), JAVA_SCRIPT_NAME);
-            //            iWebIntercept.reload(webView);
-        }
     }
 
     void addFunc(IFunc func) {
@@ -69,11 +64,10 @@ class WebController<W>
     }
 
     void open() {
-        if (webConfigView.isVisible()) {
-            boolean succeed = webConfigView.open();
-            if (!succeed) {
-                Dispatcher.start(BoxUtils.getApplication(), Type.PERMISSION);
-            }
+        showOverlay();
+        boolean succeed = webConfigView.open();
+        if (!succeed) {
+            Dispatcher.start(BoxUtils.getApplication(), Type.PERMISSION);
         }
     }
 
@@ -101,29 +95,47 @@ class WebController<W>
 
     @Override
     public void onActivityStarted(Activity activity) {
-        if (activity == currentActivity) {
-            showOverlay();
+        if (FuncController.isOpen()) {
+            //只有在打开工具箱的时候,才能够执行
+            String tag = activity.toString();
+            if (!hashSet.contains(tag)) {
+                //防止多次调用
+                hashSet.add(tag);
+                wiWebFunc.findWebView(activity);
+            }
+            if (activity == currentActivity) {
+                showOverlay();
+            }
         }
     }
 
     @Override
     public void onActivityResumed(Activity activity) {
-        if (activity == currentActivity) {
-            hideOverlay();
+        if (FuncController.isOpen()) {
+            //只有在打开工具箱的时候,才能够执行
+            if (activity == currentActivity) {
+                hideOverlay();
+            }
         }
     }
 
     @Override
     public void onActivityPaused(Activity activity) {
-        if (activity == currentActivity) {
-            showOverlay();
+        if (FuncController.isOpen()) {
+            //只有在打开工具箱的时候,才能够执行
+            if (activity == currentActivity) {
+                showOverlay();
+            }
         }
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
-        if (activity == currentActivity) {
-            hideOverlay();
+        if (FuncController.isOpen()) {
+            //只有在打开工具箱的时候,才能够执行
+            if (activity == currentActivity) {
+                hideOverlay();
+            }
         }
     }
 
@@ -134,10 +146,13 @@ class WebController<W>
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-        if (activity == currentActivity) {
-            close();
-            currentActivity = null;
-            webView = null;
+        hashSet.remove(activity.toString());
+        if (FuncController.isOpen()) {
+            //只有在打开工具箱的时候,才能够执行
+            if (activity == currentActivity) {
+                close();
+                currentActivity = null;
+            }
         }
     }
 
@@ -155,9 +170,25 @@ class WebController<W>
 
             @Override
             public boolean onClick() {
-                if (iWebIntercept != null && webView != null) {
-                    iWebIntercept.goBack(webView);
-                }
+                wiWebFunc.goBack();
+                return false;
+            }
+        });
+
+        addFunc(new IFunc() {
+            @Override
+            public int getIcon() {
+                return R.drawable.pd_refresh;
+            }
+
+            @Override
+            public String getName() {
+                return ViewKnife.getString(R.string.pd_name_go_refresh);
+            }
+
+            @Override
+            public boolean onClick() {
+                wiWebFunc.reload();
                 return false;
             }
         });
@@ -174,28 +205,7 @@ class WebController<W>
 
             @Override
             public boolean onClick() {
-                if (iWebIntercept != null && webView != null) {
-                    iWebIntercept.goForward(webView);
-                }
-                return false;
-            }
-        });
-        addFunc(new IFunc() {
-            @Override
-            public int getIcon() {
-                return R.drawable.pd_refresh;
-            }
-
-            @Override
-            public String getName() {
-                return ViewKnife.getString(R.string.pd_name_go_refresh);
-            }
-
-            @Override
-            public boolean onClick() {
-                if (iWebIntercept != null && webView != null) {
-                    iWebIntercept.reload(webView);
-                }
+                wiWebFunc.goForward();
                 return false;
             }
         });
@@ -212,9 +222,7 @@ class WebController<W>
 
             @Override
             public boolean onClick() {
-                if (iWebIntercept != null && webView != null) {
-                    iWebIntercept.clearCache(webView);
-                }
+                wiWebFunc.clearCache();
                 return false;
             }
         });
@@ -237,9 +245,7 @@ class WebController<W>
                                 @Override
                                 public void onResult(String result) {
                                     url = result;
-                                    if (iWebIntercept != null && webView != null) {
-                                        iWebIntercept.loadUrl(webView, result);
-                                    }
+                                    wiWebFunc.loadUrl(result);
                                 }
                             }).show();
                 }
@@ -264,9 +270,7 @@ class WebController<W>
                             new InputResultListener() {
                                 @Override
                                 public void onResult(String result) {
-                                    if (iWebIntercept != null && webView != null) {
-                                        iWebIntercept.addJs(webView, result);
-                                    }
+                                    wiWebFunc.addJs(result);
                                 }
                             }).show();
                 }
@@ -286,9 +290,7 @@ class WebController<W>
 
             @Override
             public boolean onClick() {
-                if (iWebIntercept != null && webView != null) {
-                    iWebIntercept.addJs(webView, SHOW_SOURCE_JS);
-                }
+                wiWebFunc.addJs(SHOW_SOURCE_JS);
                 return false;
             }
         });
@@ -305,9 +307,7 @@ class WebController<W>
 
             @Override
             public boolean onClick() {
-                if (iWebIntercept != null && webView != null) {
-                    iWebIntercept.addJs(webView, SHOW_BODY_JS);
-                }
+                wiWebFunc.addJs(SHOW_BODY_JS);
                 return false;
             }
         });
@@ -331,9 +331,7 @@ class WebController<W>
                                 @Override
                                 public void onResult(String result) {
                                     search = result;
-                                    if (iWebIntercept != null && webView != null) {
-                                        iWebIntercept.findAll(webView, result);
-                                    }
+                                    wiWebFunc.findAll(result);
                                 }
                             }).show();
                 }
@@ -359,9 +357,7 @@ class WebController<W>
                                 @Override
                                 public void onResult(String result) {
                                     search = result;
-                                    if (iWebIntercept != null && webView != null) {
-                                        iWebIntercept.findAllAsync(webView, result);
-                                    }
+                                    wiWebFunc.findAllAsync(result);
                                 }
                             }).show();
                 }
@@ -381,47 +377,10 @@ class WebController<W>
 
             @Override
             public boolean onClick() {
-                if (iWebIntercept != null && webView != null && search != null) {
-                    iWebIntercept.findNext(webView);
-                }
+                wiWebFunc.findNext();
                 return false;
             }
         });
     }
 
-    public final class InJavaScriptObj {
-
-        @JavascriptInterface
-        public void showSource(String html) {
-            BoxUtils.toastSafe("正在格式化...");
-            final String allHtml = "<xmp>" + new HtmlParser(html).parser() + "</xmp>";
-
-            if (iWebIntercept != null && webView != null) {
-                BoxUtils.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (iWebIntercept != null && webView != null) {
-                            iWebIntercept.loadData(webView, allHtml);
-                        }
-                    }
-                });
-            }
-        }
-
-        @JavascriptInterface
-        public void showBody(String html) {
-            BoxUtils.toastSafe("正在格式化...");
-            final String bodyHtml = "<xmp>" + new HtmlParser(html).parser() + "</xmp>";
-            if (iWebIntercept != null && webView != null) {
-                BoxUtils.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (iWebIntercept != null && webView != null) {
-                            iWebIntercept.loadData(webView, bodyHtml);
-                        }
-                    }
-                });
-            }
-        }
-    }
 }

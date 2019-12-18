@@ -1,6 +1,7 @@
 package com.debugbox.test;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
