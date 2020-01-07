@@ -50,13 +50,11 @@ class FuncController
     }
 
     void open() {
-        if (!isOpen) {
-            isOpen = true;
-            showOverlay();
-            boolean succeed = funcView.open();
-            if (!succeed) {
-                Dispatcher.start(BoxUtils.getApplication(), Type.PERMISSION);
-            }
+        isOpen = true;
+        showOverlay();
+        boolean succeed = funcView.open();
+        if (!succeed) {
+            Dispatcher.start(BoxUtils.getApplication(), Type.PERMISSION);
         }
     }
 

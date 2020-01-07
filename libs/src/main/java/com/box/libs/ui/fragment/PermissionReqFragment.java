@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,8 @@ import com.box.libs.DebugBox;
 import com.box.libs.R;
 import com.box.libs.ui.GeneralDialog;
 
+import java.util.logging.Logger;
+
 /**
  * Created by linjiang on 2019/3/5.
  */
@@ -23,7 +27,7 @@ import com.box.libs.ui.GeneralDialog;
 public class PermissionReqFragment extends Fragment {
 
     private final int code = 0x10;
-
+    private boolean isGoIntent = false;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,21 @@ public class PermissionReqFragment extends Fragment {
                      .negativeButton(R.string.pd_cancel)
                      .cancelable(false)
                      .show(this);
+        isGoIntent = false;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isGoIntent){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Settings.canDrawOverlays(getContext())) {
+                    DebugBox.get().open();
+                }
+            }
+            getActivity().finish();
+        }
     }
 
     @Override
@@ -51,14 +70,21 @@ public class PermissionReqFragment extends Fragment {
                             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                             intent.setData(Uri.parse("package:" + getContext().getPackageName()));
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            getActivity().startActivity(intent);
+                            isGoIntent = true;
+                            startActivity(intent);
                         } catch (ActivityNotFoundException e) {
-                            e.printStackTrace();
+                            getActivity().finish();
                         }
+                    }else {
+                        getActivity().finish();
                     }
+                }else {
+                    getActivity().finish();
                 }
+            }else {
+                getActivity().finish();
             }
-            getActivity().finish();
+//           getActivity().finish();
         }
     }
 }
