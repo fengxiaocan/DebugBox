@@ -26,7 +26,7 @@ class CacheDatabase extends SQLiteOpenHelper {
     private static final String TAG = "CacheDatabase";
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "pandora.db";
+    private static final String DATABASE_NAME = "debugbox.db";
 
     private static final List<Class> tables = new ArrayList<>();
     private static final CacheDatabase INSTANCE = new CacheDatabase();

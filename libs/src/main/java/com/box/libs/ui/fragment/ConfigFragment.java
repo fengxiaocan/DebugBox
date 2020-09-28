@@ -66,6 +66,7 @@ public class ConfigFragment extends BaseListFragment {
                         case Config.Type.NETWORK_DELAY_REQ:
                         case Config.Type.NETWORK_DELAY_RES:
                         case Config.Type.NETWORK_PAGE_SIZE:
+                        case Config.Type.DATABASE_STRING_LENGTH:
                         case Config.Type.UI_ACTIVITY_GRAVITY:
                         case Config.Type.UI_GRID_INTERVAL:
                         case Config.Type.SHAKE_THRESHOLD:
@@ -127,6 +128,9 @@ public class ConfigFragment extends BaseListFragment {
                 "" + Config.getNETWORK_DELAY_RES()).setTag(Config.Type.NETWORK_DELAY_RES));
         data.add(new NameArrowItem(getString(R.string.maximum_loads),
                 "" + Config.getNETWORK_PAGE_SIZE()).setTag(Config.Type.NETWORK_PAGE_SIZE));
+        data.add(new NameArrowItem(getString(R.string.maximum_loads_database_string_length),
+                "" + Config.getDATABASE_STRING_LENGTH()).setTag(Config.Type.DATABASE_STRING_LENGTH));
+
         data.add(new CheckBoxItem(getString(R.string.show_url_connection),
                 Config.getNETWORK_URL_CONNECTION()).setTag(Config.Type.NETWORK_URLCONNECTION));
 
@@ -178,6 +182,14 @@ public class ConfigFragment extends BaseListFragment {
                             return;
                         }
                         Config.setNETWORK_PAGE_SIZE(size);
+                        break;
+                    case Config.Type.DATABASE_STRING_LENGTH:
+                        int length = Integer.parseInt(value);
+                        if (length < 1) {
+                            BoxUtils.toast("invalid. At least 1");
+                            return;
+                        }
+                        Config.setDATABASE_STRING_LENGTH(length);
                         break;
                     case Config.Type.SHAKE_THRESHOLD:
                         int threshold = Integer.parseInt(value);

@@ -13,8 +13,8 @@
     <string name="pd_can_not_edit">can not edit</string>
     <string name="pd_please_open_net_log">TURN ON THE SWITCH TO LOG</string>
     <string name="pd_permission_title">Permission Denied</string>
-    <string name="pd_please_allow_permission">Pandora needs OVERLAY permission to show the function panel, %s please check and click allow.</string>
-    <string name="pd_permission_not_sure">Pandora needs OVERLAY permission to show the function panel, but not certain whether it is authorized, please check and click allow.</string>
+    <string name="pd_please_allow_permission">DebugBox needs OVERLAY permission to show the function panel, %s please check and click allow.</string>
+    <string name="pd_permission_not_sure">DebugBox needs OVERLAY permission to show the function panel, but not certain whether it is authorized, please check and click allow.</string>
     <string name="pd_help_title">Hint</string>
     <string name="pd_help_operate">① Single tap to select views, cancel select when tap again.\n② Long press to start moving the selected view.\n③ Click the panel to see attributes.\n④ Drag the panel to see more.\n⑤ Press back to exit.</string>
     <string name="pd_help_baseline">① Click to reset the position.\n② Drag to measure.\n③ Unit is 5 dp and can modify in the Config.\n⑤ Press back to exit.</string>
@@ -76,6 +76,7 @@
     <string name="delay_request">delay for each request(ms)</string>
     <string name="delay_response">delay for each response(ms)</string>
     <string name="maximum_loads">the maximum number of first loads</string>
+    <string name="maximum_loads_database_string_length">the maximum database string length of loads</string>
     <string name="show_url_connection">Show urlConnection request</string>
     <string name="show_protect_mode"><![CDATA[show device-protect-mode file\n(only for api>=24)
 ]]></string>

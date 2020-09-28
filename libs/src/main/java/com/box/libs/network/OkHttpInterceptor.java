@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.box.libs.cache.Content;
 import com.box.libs.cache.Summary;
-import com.box.libs.network.okhttp3.OkUrlFactory;
 import com.box.libs.util.BoxUtils;
 import com.box.libs.util.Config;
 import com.box.libs.util.FileUtil;
@@ -39,9 +38,6 @@ public class OkHttpInterceptor implements Interceptor {
     private NetStateListener listener;
 
     public OkHttpInterceptor() {
-        if (Config.getNETWORK_URL_CONNECTION()) {
-            OkUrlFactory.init();
-        }
     }
 
     /**
@@ -75,9 +71,8 @@ public class OkHttpInterceptor implements Interceptor {
         }
         MediaType contentType = requestBody.contentType();
         if (contentType != null && !TextUtils.isEmpty(contentType.toString())) {
-            if (contentType.toString().contains("form-data") || contentType.toString().contains(
-                    "octet-stream"))
-            {
+            if (contentType.toString().contains("form-data")
+                    || contentType.toString().contains("octet-stream")) {
                 try {
                     return " (binary " + requestBody.contentLength() + "-byte body omitted)";
                 } catch (IOException e) {
@@ -143,8 +138,8 @@ public class OkHttpInterceptor implements Interceptor {
         String contentEncoding = response.header("Content-Encoding");
         boolean gzip = "gzip".equalsIgnoreCase(contentEncoding);
         try {
-            return sourceToStrInternal(response.peekBody(Long.MAX_VALUE).source(), gzip,
-                    responseBody.contentType());
+            return sourceToStrInternal(
+                    response.peekBody(Long.MAX_VALUE).source(), gzip, responseBody.contentType());
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -337,8 +332,7 @@ public class OkHttpInterceptor implements Interceptor {
             if (type != null && type.toString().contains("image")) {
                 byte[] bytes = responseBodyAsBytes(response);
                 if (bytes != null) {
-                    String path = FileUtil.saveFile(bytes, response.request().url().toString(),
-                            null);
+                    String path = FileUtil.saveFile(bytes, response.request().url().toString(), null);
                     Content content = Content.query(reqId);
                     if (content != null) {
                         content.responseBody = path;
@@ -404,8 +398,9 @@ public class OkHttpInterceptor implements Interceptor {
     }
 
     private boolean checkContentEncoding(String contentEncoding) {
-        return contentEncoding == null || contentEncoding.equalsIgnoreCase("identity") ||
-               contentEncoding.equalsIgnoreCase("gzip");
+        return contentEncoding == null ||
+                contentEncoding.equalsIgnoreCase("identity") ||
+                contentEncoding.equalsIgnoreCase("gzip");
     }
 
     public void setListener(NetStateListener listener) {
@@ -415,6 +410,4 @@ public class OkHttpInterceptor implements Interceptor {
     public void removeListener() {
         listener = null;
     }
-
-
 }

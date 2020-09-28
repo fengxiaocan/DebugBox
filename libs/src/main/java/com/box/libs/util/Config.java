@@ -24,6 +24,7 @@ public class Config {
     private static final String KEY_NETWORK_DELAY_RES = "key_network_delay_res";
     private static final String KEY_SANDBOX_DPM = "key_sandbox_dpm";
     private static final String KEY_NETWORK_PAGE_SIZE = "key_network_page_size";
+    private static final String KEY_DATABASE_STRING_LENGTH = "key_database_string_length";
     private static final String KEY_NETWORK_URLCONNECTION = "key_network_urlconnection";
     private static final String KEY_UI_ACTIVITY_GRAVITY = "key_ui_activity_gravity";
     private static final String KEY_UI_GRID_INTERVAL = "key_ui_grid_interval";
@@ -38,6 +39,7 @@ public class Config {
     private static final long DEF_KEY_NETWORK_DELAY_RES = 0;
     private static final boolean DEF_KEY_SANDBOX_DPM = false;
     private static final int DEF_KEY_NETWORK_PAGE_SIZE = 512;
+    private static final int DEF_KEY_DATABASE_STRING_LENGTH = 100;
     private static final boolean DEF_KEY_NETWORK_URLCONNECTION = true;
     private static final int DEF_UI_ACTIVITY_GRAVITY = Gravity.START | Gravity.BOTTOM;
     private static final int DEF_UI_GRID_INTERVAL = 5;
@@ -152,8 +154,16 @@ public class Config {
         return getSp().getInt(KEY_NETWORK_PAGE_SIZE, DEF_KEY_NETWORK_PAGE_SIZE);
     }
 
+    public static int getDATABASE_STRING_LENGTH() {
+        return getSp().getInt(KEY_DATABASE_STRING_LENGTH, DEF_KEY_DATABASE_STRING_LENGTH);
+    }
+
     public static void setNETWORK_PAGE_SIZE(int value) {
         getSp().edit().putInt(KEY_NETWORK_PAGE_SIZE, value).apply();
+    }
+
+    public static void setDATABASE_STRING_LENGTH(int value) {
+        getSp().edit().putInt(KEY_DATABASE_STRING_LENGTH, value).apply();
     }
 
     //
@@ -203,6 +213,7 @@ public class Config {
         int NETWORK_DELAY_RES = 0x21;
         int NETWORK_PAGE_SIZE = 0x22;
         int NETWORK_URLCONNECTION = 0x23;
+        int DATABASE_STRING_LENGTH = 0x24;
 
         int SANDBOX_DPM = 0x30;
 

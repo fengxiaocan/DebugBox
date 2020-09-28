@@ -84,10 +84,8 @@ public class TableFragment extends BaseFragment {
         registerForContextMenu(recyclerView);
         recyclerView.addItemDecoration(new GridDividerDecoration.Builder().setColor(
                 ViewKnife.getColor(R.color.pd_divider_light))
-                                                                          .setThickness(
-                                                                                  ViewKnife.dip2px(
-                                                                                          1f))
-                                                                          .build());
+                .setThickness(ViewKnife.dip2px(1f))
+                .build());
         recyclerView.setAdapter(adapter);
 
         adapter.setListener(new UniversalAdapter.OnItemClickListener() {
@@ -132,8 +130,7 @@ public class TableFragment extends BaseFragment {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
-            ContextMenu.ContextMenuInfo menuInfo)
-    {
+                                    ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(-1, R.id.pd_menu_id_1, 0, R.string.pd_name_copy_value);
         menu.add(-1, R.id.pd_menu_id_2, 1, R.string.pd_name_delete_row);
@@ -159,13 +156,13 @@ public class TableFragment extends BaseFragment {
 
     private void initMenu() {
         getToolbar().getMenu()
-                    .add(0, 0, 0, R.string.pd_name_help)
-                    .setIcon(R.drawable.pd_help)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+                .add(0, 0, 0, R.string.pd_name_help)
+                .setIcon(R.drawable.pd_help)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         MenuItem searchItem = getToolbar().getMenu().add(0, 0, 1, R.string.pd_name_search);
         searchItem.setActionView(new SearchView(getContext()))
-                  .setIcon(R.drawable.pd_search)
-                  .setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+                .setIcon(R.drawable.pd_search)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 
         getToolbar().getMenu().add(0, 0, 2, R.string.pd_name_info);
         getToolbar().getMenu().add(0, 0, 3, R.string.pd_name_add);

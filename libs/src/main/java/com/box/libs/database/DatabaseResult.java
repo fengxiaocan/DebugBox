@@ -3,8 +3,9 @@ package com.box.libs.database;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import com.box.libs.util.Config;
+
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +35,7 @@ public class DatabaseResult {
 
     private static List<List<String>> wrapRows(Cursor cursor) {
         List<List<String>> result = new ArrayList<>();
-
+        final int stringLength = Config.getDATABASE_STRING_LENGTH();
         final int numColumns = cursor.getColumnCount();
         while (cursor.moveToNext()) {
             ArrayList<String> flatList = new ArrayList<>();
@@ -54,7 +55,11 @@ public class DatabaseResult {
                         break;
                     case Cursor.FIELD_TYPE_STRING:
                     default:
-                        flatList.add(cursor.getString(column));
+                        String string = cursor.getString(column);
+                        if (string != null && string.length() > stringLength) {
+                            string = string.substring(0, stringLength) + "...";
+                        }
+                        flatList.add(string);
                         break;
                 }
             }
@@ -66,7 +71,7 @@ public class DatabaseResult {
     private static String blobToString(byte[] blob) {
         if (blob.length <= MAX_BLOB_LENGTH) {
             if (fastIsAscii(blob)) {
-                return new String(blob, StandardCharsets.US_ASCII);
+                return new String(blob, Charset.forName("US-ASCII"));
             }
         }
         return UNKNOWN_BLOB_LABEL;
